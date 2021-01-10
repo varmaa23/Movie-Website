@@ -1,1 +1,47 @@
-Command-line syntax
+Command-Line Syntax for *find
+NAME
+	find -- find author, title, or year based on a given search string
+
+SYNOPSIS
+	python3 books.py find [[-author, -au, -a], [-title, -tl, -t], [-year, -y	r, -y]] ["search string"]
+
+DESCRIPTION
+	Given the books.csv dataset, *bold*find looks for the author, title, *bo	ld*find displays all authors, titles, or years that match the provided		input string.
+
+	The following options can be used after *find*:
+
+	-author, -au, -a	Print a list of authors whose names contain the 				search string (case-insensitive). For each 
+				author, print a list of the author's books. 
+
+				Acceptable Inputs: Requires only  one string inp				ut. Any string is acceptable, as long as it's 
+				given in quotes. 
+
+
+	-title, -tl, -t		Print a list of books whose titles contain the
+				search string (case-insensitive).
+
+				Acceptable Inputs: Requires only  one string inp                                ut. Any string is acceptable, as long as it's 
+                                given in quotes. 
+
+
+	-year, -yr, -y		Print a list of books published between years A
+				and B, inclusive.
+
+				Acceptable Inputs: This option requires two 
+				inputs, both of which should be four-digit
+				integer year numbers in any order. There should
+				be a space between the two numbers.
+
+EXAMPLES
+	python3 books.py find -author "Bel"
+
+	python3 books.py find -yr 1906 1811
+
+	python3 books.py find -t "Macbeth"
+
+	python3 books.py find -t "h"
+
+
+				January 10, 2021 
+
+
