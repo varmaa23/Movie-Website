@@ -116,6 +116,7 @@ def display_find_years_results(books_array, first_input, second_input):
     else:
         print("No matches.")
 
+
 # Given a non-empty list of books, this method displays books in alphabetic order
 def display_find_titles_results(title_array, input):
     # If the find_titles method found any matches and returned a not empty list:
@@ -130,6 +131,7 @@ def display_find_titles_results(title_array, input):
             print(f'"{title}" by {author}')
     else:
         print("No matches.")
+
 
 # Given a non-empty list of books, this method displays the authors and their books
 def display_find_authors_results(author_array, input):
@@ -182,13 +184,15 @@ def main():
 
     args = parser.parse_args()
 
+    # If the user writes a command (-y or --author) and does not provide a search input, print error message
     if len(args.Input) == 0:
         print("Error. Input is required. --help for more information")
         sys.exit()
-
     else:
         first_input = args.Input[0]
 
+    # Checks the number of inputs provided by the user. If they correspond to the command written, execute the
+    # corresponding method. Otherwise, print error message
     if len(args.Input) == 1:
         if args.author:
             display_find_authors_results(find_authors(first_input), first_input)
