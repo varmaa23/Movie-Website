@@ -1,3 +1,6 @@
+# Authors: Valentina Guerrero, Aishwarya Varma
+# Date: 1/15/2021
+
 import csv
 import re
 import argparse
