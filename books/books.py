@@ -24,6 +24,16 @@ with open('books.csv', newline='') as csvfile:
 
         BooksDataSet.append([title, publicaton_year, author])
 
+def convertStringToInt(year):
+    if len(year) == 4:
+        try:
+             int_year = int(year)
+        except:
+            print("Please input an integer")
+        return int_year
+    return
+
+
 def find_authors(author_input):
     authors_array = []
     for book in BooksDataSet:
@@ -45,7 +55,15 @@ def find_titles(title_input):
         title = book[0]
         if (type(title) is str and title.lower().find(title_input.lower()) != -1):
             title_array.append(title)
-    return title_array          
+    return title_array   
+
+def find_years(year1, year2):
+    year1 = convertStringToInt(year1)
+    year2 = convertStringToInt(year2)
+    # for book in BooksDataSet:
+    #     title = book[0]
+    #     if (type(title) is str and title.lower().find(title_input.lower()) != -1):
+    #         title_array.append(title)
 
 
 def main():
@@ -54,20 +72,29 @@ def main():
     group.add_argument("-a", "--author", action="store_true")
     group.add_argument("-t", "--title", action="store_true")
     group.add_argument("-y", "--year", action="store_true")
-    parser.add_argument("Input", nargs="", type = str, help="The search string") 
+    parser.add_argument("Input", nargs="*", type = str, help="The search string") 
     # parser.add_argument("Input", type=int, help="The search string", required=False) 
     args = parser.parse_args()
+    
+    first_input = args.Input[0]
+        
 
-    if args.author:
-        print(f'Author, the input is {args.Input}.')
-        print(find_authors(str(args.Input)))
-    elif args.title:
-        print(f'Title, the input is {args.Input}.')
-        print(find_titles(args.Input[0]))
-    elif args.year:
-        print(f'Year, the input is {args.Input[0]}.')
+    if len(args.Input) == 1:
+        if args.author:
+            print(find_authors(str(args.Input)))
+        elif args.title:
+            print(find_titles(first_input))
+        else:
+            print("Use either --author or --title")
+    elif len(args.Input) == 2:
+        if args.year:
+            second_input = args.Input[1]
+            print(f'Year, the input is {first_input, second_input}.')
+            find_years(first_input, second_input)
+        else:
+            print("For two arguments, you must use --year")
     else:
-        print("What is this")
+        print("Error")
 
 main()
 
