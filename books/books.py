@@ -31,15 +31,28 @@ def convertStringToInt(year):
         except:
             print("Please input an integer")
 
+def isList(inputVar):
+    return type(inputVar) is list
+
+def isString(inputVar):
+    return type(inputVar) is str
+
+def displayListToString(input_list):
+    return_string = ""
+    for elementIndex in range(0, len(input_list) - 1):
+        return_string += input_list[elementIndex] + ", "
+    return_string += input_list[elementIndex + 1]
+    return return_string
+
 
 def find_authors(author_input):
     authors_array = []
     for book in BooksDataSet:
         author = book[2]
         title = book[0]
-        if type(author) is str and author.lower().find(author_input.lower()) != -1:
-            authors_array.append([author, title])
-        elif type(author) is list:
+        if isString(author) and author.lower().find(author_input.lower()) != -1:
+            authors_array.append(book)
+        elif isList(author):
             for authorIndex in range(len(author)):
                 if author[authorIndex].lower().find(author_input.lower()) != -1:
                     authors_array.append(book)
@@ -50,7 +63,7 @@ def find_titles(title_input):
     title_array = []
     for book in BooksDataSet:
         title = book[0]
-        if type(title) is str and title.lower().find(title_input.lower()) != -1:
+        if isString(title) and title.lower().find(title_input.lower()) != -1:
             title_array.append(book)
     return title_array
 
@@ -69,30 +82,52 @@ def find_years(year1, year2):
 def display_find_years_results(books_array):
     sorted_array = sorted(books_array, key=lambda x: x[1], reverse=True)
     for book in sorted_array:
-        print(f'{book[1]}: "{book[0]}" by {book[2]}')
+        title = book[0]
+        publication_year = book[1]
+        author = book[2]
+        if(isList(author)):
+            author = displayListToString(author)
+        print(f'{publication_year}: "{title}" by {author}')
 
 
 def display_find_titles_results(title_array):
     sorted_array = sorted(title_array, key=lambda x: x[0])
     for book in sorted_array:
-        print(f'"{book[0]}" by {book[2]}')
+        title = book[0]
+        author = book[2]
+        if(isList(author)):
+            author = displayListToString(author)
+        print(f'"{title}" by {author}')
 
 
 def display_find_authors_results(author_array):
-    sorted_array = sorted(author_array, key=lambda x: x[0])
-    first = True
-    for index in range(len(sorted_array)-1):
-        author = sorted_array[index][0]
-        title = sorted_array[index][1]
-        next_book_author = sorted_array[index+1][0]
-        if first:
-            print(f'{author}')
-            first = False
+    if(author_array):
+        sorted_array = sorted(author_array, key=lambda x: x[2])
+        print(sorted_array)
+        first = True
+        for index in range(len(sorted_array)):
+            author = sorted_array[index][2]
+            title = sorted_array[index][0]
+            if(index < len(sorted_array) - 1):
+                next_book_author = sorted_array[index+1][2]
+            else:
+                next_book_author = sorted_array[index][2]
+           
+            if(isList(author)):
+                author = displayListToString(author)
+                print("tes")
 
-        print(f'{author}, "{title}"')
-        if author != next_book_author:
-            print("")
-            first = True
+            if first:
+               # print(f'{author}')
+                first = False
+            
+
+            print(f'{author}, "{title}"')
+            if author != next_book_author:
+                print(" ")
+                first = True
+    else:
+        print("No matches.")
 
 
 
@@ -111,6 +146,7 @@ def main():
 
     if len(args.Input) == 1:
         if args.author:
+            print(f'Results for authors that match the following string: {first_input}')
             display_find_authors_results(find_authors(first_input))
         elif args.title:
             print(f'Results for titles that match the following string: {first_input}')
