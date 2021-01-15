@@ -16,7 +16,7 @@ DESCRIPTION
 				Acceptable Inputs: Requires only  one string inp				ut. Any string is acceptable, and it can be give				with or without quotes.  
 
 
-	--title, -t		Print a list of books whose titles and their cor				responding titles which contain the search strin				g (case-insensitive).
+	--title, -t		Print a list of books whose titles and their cor				responding authors contain the search string (ca				se-insensitive).
 
 				Acceptable Inputs: Requires only  one string inp                                ut. Any string is acceptable, and it can be give                                with or without quotes. 
 
