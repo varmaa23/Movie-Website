@@ -12,7 +12,6 @@ def fillBooksDataSet(file_name):
     with open(file_name, newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',')
         for row in spamreader:
-            print(row)
             title = row[0]
             publicaton_year = row[1]
             author = row[2]
