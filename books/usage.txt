@@ -1,0 +1,55 @@
+Command-Line Syntax
+NAME
+	find author, title, or year based on a given search string
+
+SYNOPSIS
+	python3 books.py [[--author, -a], [--title, -t], [--year, -y]] ["input1"	] [optional:"input2"] 
+
+DESCRIPTION
+	Given the books.csv dataset, --author, --title, and --year look for all 	authors, titles, or years that match the provided input string.
+
+	The following commands can be used:
+
+	--author,  -a		Print a list of authors whose names contain the 				search string (case-insensitive). For each 
+				author, print a list of the author's books. 
+
+				Acceptable Inputs: Requires only  one string inp				ut. Any string is acceptable, and it can be give				with or without quotes.  
+
+
+	--title, -t		Print a list of books whose titles and their cor				responding authors contain the search string (ca				se-insensitive).
+
+				Acceptable Inputs: Requires only  one string inp                                ut. Any string is acceptable, and it can be give                                with or without quotes. 
+
+
+	--year, -y		Print a list of books' titles and authors publis				hed between years A and B, inclusive.
+
+				Acceptable Inputs: This option requires two 
+				inputs, both of which should be four-digit
+				integer year numbers in any order. There should
+				be a space between the two numbers.
+
+	An error will appear if:
+
+	* Two flags are used in conjuction with one another.
+
+	* No input is provided to any of the operators.
+
+	* More than one input is provided to --author and --title.
+
+	* Only one input or more than 2 inputs are provided to --year.
+
+	* If the year is not a valid 4-digit number. 
+
+EXAMPLES
+	python3 books.py --author "Bel"
+
+	python3 books.py -y 1906 1811
+
+	python3 books.py -t "Macbeth"
+
+	python3 books.py find -t "h"
+
+
+				January 10, 2021 
+
+

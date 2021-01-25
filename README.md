@@ -1,2 +1,2 @@
 # cs257
-This repository includes homework for CS257 (Software Design) for Winter 2021. 
+This repository contains homework for CS257 at Carleton College Winter Term 2021
