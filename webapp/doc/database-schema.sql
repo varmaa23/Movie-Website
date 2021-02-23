@@ -2,11 +2,12 @@ CREATE TABLE movies(
     id integer,
     title text,
     overview text,
-    budget integer,
+    budget integer, .
     revenue integer,
     imdb_id text,
     rating decimal,
     runtime integer,
+    release_year integer,
     poster_path text
 );
 
@@ -16,34 +17,38 @@ CREATE TABLE languages(
     lang_full text
 );
 
-CREATE TABLE prod_companies(
+CREATE TABLE prodcompanies(
     id integer,
     company_name text
 );
 
-CREATE TABLE prod_countries(
+CREATE TABLE countries(
     id integer,
     country_name text
 );
 
-CREATE TABLE release_years(
+CREATE TABLE genres(
     id integer,
-    release_year integer
+    genre text
 );
 
-CREATE TABLE movie_lang_year(
+CREATE TABLE movie_lang(
     movie_id integer,
     lang_id integer,
-    year_id integer,
     spoken_lang_id integer
 );
 
-CREATE TABLE movie_prod_companies(
+CREATE TABLE movie_prodcompanies(
     movie_id integer,
     prod_comp_id integer
 );
 
-CREATE TABLE movie_prod_countries(
+CREATE TABLE movie_countries(
     movie_id integer,
-    prod_country_id integer
+    country_id integer
+);
+
+CREATE TABLE movie_genres(
+    movie_id integer,
+    genre_id integer
 );
