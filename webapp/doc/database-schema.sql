@@ -2,8 +2,8 @@ CREATE TABLE movies(
     id integer,
     title text,
     overview text,
-    budget integer, .
-    revenue integer,
+    budget decimal,
+    revenue decimal,
     imdb_id text,
     rating decimal,
     runtime integer,

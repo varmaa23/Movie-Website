@@ -1,0 +1,1 @@
+1. put csv files in static and change filepaths

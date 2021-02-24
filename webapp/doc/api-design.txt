@@ -1,7 +1,7 @@
 Authors: Aishwarya Varma and Valentina Guerrero
 
 This endpoint is for the list of filtered movies. 
-REQUEST: /movie_contains?
+REQUEST: /movies
 The results are constrained depending on the following optional GET parameters, which will be combined by a boolean AND: 
     
     search_everything = search_text // when searched, match the unser-given keyword to any field in the database
