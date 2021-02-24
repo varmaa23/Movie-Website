@@ -13,9 +13,9 @@ import psycopg2
 
 api = flask.Blueprint('api', __name__)
 
-from config import password
-from config import database
-from config import user
+#from config import password
+#from config import database
+#from config import user
 
 def connect_database():
     try:
