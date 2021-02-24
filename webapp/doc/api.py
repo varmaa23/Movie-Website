@@ -8,7 +8,7 @@
 import sys
 import flask
 import json
-import config
+#import config
 import psycopg2
 
 api = flask.Blueprint('api', __name__)
