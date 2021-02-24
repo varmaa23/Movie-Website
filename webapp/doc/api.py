@@ -40,3 +40,10 @@ def get_movie(movie_id):
         exit()
 
     return json.dumps("hello2")
+
+
+@api.route('/hello/') 
+def get_dogs():
+    dogs = [{'name':'Ruby', 'birth_year':2003, 'death_year':2016, 'description':'a very good dog'},
+            {'name':'Maisie', 'birth_year':2017, 'death_year':None, 'description':'a very good dog'}]
+    return json.dumps(dogs)
