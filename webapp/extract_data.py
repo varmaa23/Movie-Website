@@ -1,6 +1,7 @@
 # Authors: Valentina Guerrero and Aishwarya Varma 
 import csv
-
+import json
+import re
 
 def get_data(file_name):
     movies_dictionary = {}
@@ -49,6 +50,80 @@ def create_movies_table(movies_dictionary):
     return movies_table
 
 
+
+def create_table_from_list(movies_list):
+    output_list = []
+    for item in movies_list:
+        for genre in item[2]:
+            output_list.append([item[0], genre])
+    return output_list
+
+
+def get_movie_genres_table(movies_dictionary):
+    dictionary = {}
+    genres_table = []
+    genres_movies_table = []
+    for movie_id in movies_dictionary:
+        title = movies_dictionary.get(movie_id).get('title')
+        movie_genres = []
+        genres = movies_dictionary.get(movie_id).get('genres')
+        genres = genres[1:-1]
+        regex = '(?<={ )(.*)(?=} )'
+        regular = re.split(regex, genres)
+        for genre in regular:
+            test = genre.split(', {')
+            for element in test:
+                if element != '':
+                    if element[0] != '{':
+                        element = '{' + element
+                    element = re.sub("\'", "\"", element)
+                    genre_dict= json.loads(element) 
+                    genre_id = genre_dict.get('id')
+                    movie_genres.append(genre_id)
+                    genre_name = genre_dict.get('name')
+                    try:
+                        dictionary[genre_name]
+                    except:
+                        dictionary[genre_name] = genre_dict.get('id')
+                        genres_table.append([genre_id, genre_name])
+                        print(genres_table)
+        genres_movies_table.append([movie_id, title, movie_genres])
+    return genres_movies_table
+
+def create_genres_table(movies_dictionary):
+    dictionary = {}
+    genres_table = []
+    genres_movies_table = []
+    for movie_id in movies_dictionary:
+        title = movies_dictionary.get(movie_id).get('title')
+        movie_genres = []
+        genres = movies_dictionary.get(movie_id).get('genres')
+        genres = genres[1:-1]
+        regex = '(?<={ )(.*)(?=} )'
+        regular = re.split(regex, genres)
+        for genre in regular:
+            test = genre.split(', {')
+            for element in test:
+                if element != '':
+                    if element[0] != '{':
+                        element = '{' + element
+                    element = re.sub("\'", "\"", element)
+                    genre_dict= json.loads(element) 
+                    genre_id = genre_dict.get('id')
+                    movie_genres.append(genre_id)
+                    genre_name = genre_dict.get('name')
+                    print(genre_id)
+                    print('-----')
+                    try:
+                        dictionary[genre_name]
+                    except:
+                        dictionary[genre_name] = genre_dict.get('id')
+                        genres_table.append([genre_id, genre_name])
+                        print(genres_table)
+        genres_movies_table.append([movie_id, title, movie_genres])
+    return genres_table
+
+
 def create_csv(table, file_name):
     with open(file_name, 'w', newline='') as file:
         writer = csv.writer(file)
@@ -58,6 +133,10 @@ def create_csv(table, file_name):
 def main():
     movies = get_data('movies_metadata.csv')
     create_csv(create_movies_table(movies), 'movies.csv')
+    movie_genres_table = get_movie_genres_table(movies)
+    create_csv(movie_genres_table, 'genres_movies_raw.csv')
+    create_csv(create_genres_table(movies),'genres_table.csv')
+    create_csv(create_table_from_list(movie_genres_table), 'genres_movies.csv')
 
 if __name__ == "__main__":
-    results = main()
+    main()

@@ -1,1 +1,6 @@
-1. put csv files in static and change filepaths
+1. Clean data for tables
+2. Endpoints () 
+3. HTML (home page and results page)
+4. Javascript 
+5. CSS
+
