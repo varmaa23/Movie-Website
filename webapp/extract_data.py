@@ -121,7 +121,74 @@ def create_genres_table(movies_dictionary):
     return genres_table
 
 
-def create_production_company_table(movies_dictionary):
+def get_productioncountry_movies_table(movies_dictionary):
+    count = 0
+    dictionary = {}
+    genres_table = []
+    genres_movies_table = []
+    for movie_id in movies_dictionary:
+        title = movies_dictionary.get(movie_id).get('title')
+        movie_genres = []
+        genres = movies_dictionary.get(movie_id).get('production_countries')
+        genres = genres[1:-1]
+        regex = '(?<={ )(.*)(?=} )'
+        regular = re.split(regex, genres)
+        for genre in regular:
+            test = genre.split(', {')
+            for element in test:
+                
+                if element != '':
+                    if element[0] != '{':
+                        element = '{' + element
+                    element = re.sub("\'", "\"", element)
+                    
+                    genre_dict= json.loads(element) 
+                    genre_id = genre_dict.get('iso_3166_1')
+                    genre_name = genre_dict.get('name')
+                    movie_genres.append(genre_name)
+                    
+                    try:
+                        dictionary[genre_name]
+                    except:
+                        dictionary[genre_name] = genre_dict.get('iso_3166_1')
+                        genres_table.append([count, genre_name])
+                        count = count + 1
+        genres_movies_table.append([movie_id, title, movie_genres])
+    return genres_movies_table
+
+def create_production_country_table(movies_dictionary):
+    count = 0
+    dictionary = {}
+    genres_table = []
+    genres_movies_table = []
+    for movie_id in movies_dictionary:
+        title = movies_dictionary.get(movie_id).get('title')
+        movie_genres = []
+        genres = movies_dictionary.get(movie_id).get('production_countries')
+        genres = genres[1:-1]
+        regex = '(?<={ )(.*)(?=} )'
+        regular = re.split(regex, genres)
+        for genre in regular:
+            test = genre.split(', {')
+            for element in test:  
+                if element != '':
+                    if element[0] != '{':
+                        element = '{' + element
+                    element = re.sub("\'", "\"", element)
+                    genre_dict= json.loads(element) 
+                    genre_id = genre_dict.get('iso_3166_1')
+                    movie_genres.append(genre_id)
+                    genre_name = genre_dict.get('name')
+                    try:
+                        dictionary[genre_name]
+                    except:
+                        dictionary[genre_name] = genre_dict.get('iso_3166_1')
+                        genres_table.append([count, genre_name])
+                        count = count + 1
+        genres_movies_table.append([movie_id, title, movie_genres])
+    return genres_table
+
+def get_companies_table(movies_dictionary):
     dictionary = {}
     genres_table = []
     genres_movies_table = []
@@ -135,18 +202,94 @@ def create_production_company_table(movies_dictionary):
         for genre in regular:
             test = genre.split(', {')
             for element in test:
+                print(element)
                 if element != '':
                     if element[0] != '{':
                         element = '{' + element
+                    element = re.sub("\(", " ", element)
+                    element = re.sub("\)", " ", element)
+                    string_double_quotes = re.findall('"(.*?)"', element)
+                    changed = True
+                    if (string_double_quotes):
+                        string_single_quote = re.findall("\'", string_double_quotes[0])
+                        if (string_single_quote):
+                            changed = False
+                            print('strange')
+                            clean_string = re.sub("\'", " ", string_double_quotes[0])
+                            print(clean_string)
+                            element = re.sub(string_double_quotes[0], clean_string, element)
+
+                    werid_name = re.findall("'(.*?)'", element)
+
+                    if (werid_name and changed):
+                        print('we')
+                        clean_string_2 = re.sub("\"", " ", werid_name[1])
+                        print(clean_string_2)
+                        element = re.sub(werid_name[1], clean_string_2, element)
+
                     element = re.sub("\'", "\"", element)
-                    element = re.sub("\"", "\"", element)
                     print(element)
+                    print('-------------')
                     genre_dict= json.loads(element) 
                     genre_id = genre_dict.get('id')
                     movie_genres.append(genre_id)
                     genre_name = genre_dict.get('name')
-                    print(genre_id)
-                    print('-----')
+                    
+                    try:
+                        dictionary[genre_name]
+                    except:
+                        dictionary[genre_name] = genre_dict.get('id')
+                        genres_table.append([genre_id, genre_name])
+        genres_movies_table.append([movie_id, title, movie_genres])
+    return genres_movies_table
+
+def create_companies_table(movies_dictionary):
+    dictionary = {}
+    genres_table = []
+    genres_movies_table = []
+    for movie_id in movies_dictionary:
+        title = movies_dictionary.get(movie_id).get('title')
+        movie_genres = []
+        genres = movies_dictionary.get(movie_id).get('production_companies')
+        genres = genres[1:-1]
+        regex = '(?<={ )(.*)(?=} )'
+        regular = re.split(regex, genres)
+        for genre in regular:
+            test = genre.split(', {')
+            for element in test:
+                print(element)
+                if element != '':
+                    if element[0] != '{':
+                        element = '{' + element
+                    element = re.sub("\(", " ", element)
+                    element = re.sub("\)", " ", element)
+                    string_double_quotes = re.findall('"(.*?)"', element)
+                    changed = True
+                    if (string_double_quotes):
+                        string_single_quote = re.findall("\'", string_double_quotes[0])
+                        if (string_single_quote):
+                            changed = False
+                            print('strange')
+                            clean_string = re.sub("\'", " ", string_double_quotes[0])
+                            print(clean_string)
+                            element = re.sub(string_double_quotes[0], clean_string, element)
+
+                    werid_name = re.findall("'(.*?)'", element)
+
+                    if (werid_name and changed):
+                        print('we')
+                        clean_string_2 = re.sub("\"", " ", werid_name[1])
+                        print(clean_string_2)
+                        element = re.sub(werid_name[1], clean_string_2, element)
+
+                    element = re.sub("\'", "\"", element)
+                    print(element)
+                    print('-------------')
+                    genre_dict= json.loads(element) 
+                    genre_id = genre_dict.get('id')
+                    movie_genres.append(genre_id)
+                    genre_name = genre_dict.get('name')
+                    
                     try:
                         dictionary[genre_name]
                     except:
@@ -154,6 +297,76 @@ def create_production_company_table(movies_dictionary):
                         genres_table.append([genre_id, genre_name])
         genres_movies_table.append([movie_id, title, movie_genres])
     return genres_table
+
+def create_languages_table(movies_dictionary):
+    count = 0
+    dictionary = {}
+    genres_table = []
+    genres_movies_table = []
+    for movie_id in movies_dictionary:
+        title = movies_dictionary.get(movie_id).get('title')
+        movie_genres = []
+        genres = movies_dictionary.get(movie_id).get('spoken_languages')
+        genres = genres[1:-1]
+        regex = '(?<={ )(.*)(?=} )'
+        regular = re.split(regex, genres)
+        for genre in regular:
+            test = genre.split(', {')
+            for element in test:
+                
+                if element != '':
+                    if element[0] != '{':
+                        element = '{' + element
+                    element = re.sub("\'", "\"", element)
+                    
+                    genre_dict= json.loads(element) 
+                    genre_id = genre_dict.get('iso_639_1')
+                    movie_genres.append(genre_id)
+                    genre_name = genre_dict.get('name')
+                    
+                    try:
+                        dictionary[genre_name]
+                    except:
+                        dictionary[genre_name] = genre_dict.get('iso_639_1')
+                        genres_table.append([count, genre_id, genre_name])
+                        count = count + 1
+        genres_movies_table.append([movie_id, title, movie_genres])
+    return genres_table
+
+
+def get_languages_table(movies_dictionary):
+    count = 0
+    dictionary = {}
+    genres_table = []
+    genres_movies_table = []
+    for movie_id in movies_dictionary:
+        title = movies_dictionary.get(movie_id).get('title')
+        movie_genres = []
+        genres = movies_dictionary.get(movie_id).get('spoken_languages')
+        genres = genres[1:-1]
+        regex = '(?<={ )(.*)(?=} )'
+        regular = re.split(regex, genres)
+        for genre in regular:
+            test = genre.split(', {')
+            for element in test:
+                
+                if element != '':
+                    if element[0] != '{':
+                        element = '{' + element
+                    element = re.sub("\'", "\"", element)
+                    genre_dict= json.loads(element) 
+                    genre_id = genre_dict.get('iso_639_1')
+                    movie_genres.append(genre_id)
+                    genre_name = genre_dict.get('name')
+                    
+                    try:
+                        dictionary[genre_name]
+                    except:
+                        dictionary[genre_name] = genre_dict.get('iso_639_1')
+                        genres_table.append([count, genre_id, genre_name])
+                        count = count + 1
+        genres_movies_table.append([movie_id, title, movie_genres])
+    return genres_movies_table
 
 def create_csv(table, file_name):
     with open(file_name, 'w', newline='') as file:
@@ -165,10 +378,17 @@ def main():
     movies = get_data('movies_metadata.csv')
     create_csv(create_movies_table(movies), 'movies.csv')
     movie_genres_table = get_movie_genres_table(movies)
-    create_csv(movie_genres_table, 'genres_movies_raw.csv')
-    create_csv(create_genres_table(movies),'genres_table.csv')
-    create_csv(create_production_company_table(movies),'production_company.csv')
+    movie_prodcountries_table = get_productioncountry_movies_table(movies)
+    movie_languages_table = get_languages_table(movies)
+    movie_companies = get_companies_table(movies)
+    create_csv(create_genres_table(movies),'genres.csv')
+    create_csv(create_production_country_table(movies),'countries.csv')
+    create_csv(create_languages_table(movies), 'languages.csv')
+    create_csv(create_companies_table(movies), 'companies.csv')
     create_csv(create_table_from_list(movie_genres_table), 'genres_movies.csv')
+    create_csv(create_table_from_list(movie_prodcountries_table), 'countries_movies.csv')
+    create_csv(create_table_from_list(movie_languages_table), 'languages_movies.csv')
+    create_csv(create_table_from_list(movie_companies), 'companies_movies.csv')
 
 if __name__ == "__main__":
     main()
