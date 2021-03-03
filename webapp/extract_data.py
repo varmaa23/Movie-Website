@@ -86,7 +86,6 @@ def get_movie_genres_table(movies_dictionary):
                     except:
                         dictionary[genre_name] = genre_dict.get('id')
                         genres_table.append([genre_id, genre_name])
-                        print(genres_table)
         genres_movies_table.append([movie_id, title, movie_genres])
     return genres_movies_table
 
@@ -112,6 +111,40 @@ def create_genres_table(movies_dictionary):
                     genre_id = genre_dict.get('id')
                     movie_genres.append(genre_id)
                     genre_name = genre_dict.get('name')
+                    try:
+                        dictionary[genre_name]
+                    except:
+                        dictionary[genre_name] = genre_dict.get('id')
+                        genres_table.append([genre_id, genre_name])
+                       
+        genres_movies_table.append([movie_id, title, movie_genres])
+    return genres_table
+
+
+def create_production_company_table(movies_dictionary):
+    dictionary = {}
+    genres_table = []
+    genres_movies_table = []
+    for movie_id in movies_dictionary:
+        title = movies_dictionary.get(movie_id).get('title')
+        movie_genres = []
+        genres = movies_dictionary.get(movie_id).get('production_companies')
+        genres = genres[1:-1]
+        regex = '(?<={ )(.*)(?=} )'
+        regular = re.split(regex, genres)
+        for genre in regular:
+            test = genre.split(', {')
+            for element in test:
+                if element != '':
+                    if element[0] != '{':
+                        element = '{' + element
+                    element = re.sub("\'", "\"", element)
+                    element = re.sub("\"", "\"", element)
+                    print(element)
+                    genre_dict= json.loads(element) 
+                    genre_id = genre_dict.get('id')
+                    movie_genres.append(genre_id)
+                    genre_name = genre_dict.get('name')
                     print(genre_id)
                     print('-----')
                     try:
@@ -119,10 +152,8 @@ def create_genres_table(movies_dictionary):
                     except:
                         dictionary[genre_name] = genre_dict.get('id')
                         genres_table.append([genre_id, genre_name])
-                        print(genres_table)
         genres_movies_table.append([movie_id, title, movie_genres])
     return genres_table
-
 
 def create_csv(table, file_name):
     with open(file_name, 'w', newline='') as file:
@@ -136,6 +167,7 @@ def main():
     movie_genres_table = get_movie_genres_table(movies)
     create_csv(movie_genres_table, 'genres_movies_raw.csv')
     create_csv(create_genres_table(movies),'genres_table.csv')
+    create_csv(create_production_company_table(movies),'production_company.csv')
     create_csv(create_table_from_list(movie_genres_table), 'genres_movies.csv')
 
 if __name__ == "__main__":
