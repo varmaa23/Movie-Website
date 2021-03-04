@@ -17,7 +17,7 @@ CREATE TABLE languages(
     lang_full text
 );
 
-CREATE TABLE prodcompanies(
+CREATE TABLE companies(
     id integer,
     company_name text
 );
@@ -32,15 +32,14 @@ CREATE TABLE genres(
     genre text
 );
 
-CREATE TABLE movie_lang(
+CREATE TABLE movie_langs(
     movie_id integer,
-    lang_id integer,
-    spoken_lang_id integer
+    lang_id integer
 );
 
-CREATE TABLE movie_prodcompanies(
+CREATE TABLE movie_companies(
     movie_id integer,
-    prod_comp_id integer
+    company_id integer
 );
 
 CREATE TABLE movie_countries(

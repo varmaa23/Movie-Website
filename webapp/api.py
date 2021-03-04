@@ -26,6 +26,55 @@ def connect_database():
         exit()
     
 
+@api.route('/movies') 
+def get_movies():
+    # http://localhost:5000/api/movies?title=tes&language=es
+    title = flask.request.args.get('title')
+    language = flask.request.args.get('language')
+    rating = flask.request.args.get('rating')
+    company = flask.request.args.get('company')
+    country = flask.request.args.get('country')
+    years = flask.request.args.get('years')
+    languages = flask.request.args.get('languages')
+    renevue = flask.request.args.get('revenue')
+    genre = flask.request.args.get('genre')
+
+    message={
+        'title': title,
+        'language': language,
+        'rating': rating,
+        'company': company,
+    }
+
+    query = '''SELECT movies.movie_id, 
+        movies.title,
+        movies.poster_path,
+        movies.year,
+        movies.genre,
+        movies.rating
+        FROM 
+            movies,
+            languages,
+            companies,
+            countries,
+            genres,
+            movie_langs,
+            movie_companies,
+            movie_countries,
+            movie_genres
+        WHERE 
+        
+        
+        ;'''
+
+    return json.dumps(message)
+
+@api.route('/hello') 
+def get_hello():
+    message = 'hey there'
+    return json.dumps(message)
+
+
 @api.route('/movie/<movie_id>') 
 def get_movie(movie_id):
     movies = []
@@ -57,8 +106,59 @@ def get_movie(movie_id):
     return json.dumps(movie_dict)
 
 
-@api.route('/hello/') 
-def get_dogs():
-    dogs = [{'name':'Ruby', 'birth_year':2003, 'death_year':2016, 'description':'a very good dog'},
-            {'name':'Maisie', 'birth_year':2017, 'death_year':None, 'description':'a very good dog'}]
-    return json.dumps(dogs)
+@api.route('/genres') 
+def get_genres():
+    genres = []
+    connection = connect_database()
+    query = '''SELECT * FROM genres;'''
+
+    try:
+        cursor = connection.cursor()
+        cursor.execute(query)
+        for row in cursor:
+            genres.append(row[1])
+            
+    except Exception as e:
+        print(e)
+        exit()
+
+    return json.dumps(genres)
+
+
+@api.route('/languages') 
+def get_languages():
+    languages = []
+    connection = connect_database()
+    query = '''SELECT * FROM languages;'''
+
+    try:
+        cursor = connection.cursor()
+        cursor.execute(query)
+        for row in cursor:
+            languages.append(row[2])
+            
+    except Exception as e:
+        print(e)
+        exit()
+
+    return json.dumps(languages)
+
+@api.route('/countries') 
+def get_countries():
+    countries = []
+    connection = connect_database()
+    query = '''SELECT * FROM countries;'''
+
+    try:
+        cursor = connection.cursor()
+        cursor.execute(query)
+        for row in cursor:
+            countries.append(row[1])
+            
+    except Exception as e:
+        print(e)
+        exit()
+
+    return json.dumps(countries)
+
+

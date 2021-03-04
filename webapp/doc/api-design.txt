@@ -53,10 +53,10 @@ RESPONSE: a JSON list of integers sorted in descending order.
 REQUEST: /genres
 RESPONSE: a JSON list of strings sorted in alphabetical order.
 
-REQUEST: /language
+REQUEST: /languages
 RESPONSE: A JSON list of strings sorted in alphabetical order (put the 5 most spoken languages at the top and the rest ordered).
 
-REQUEST: /production_country
+REQUEST: /countries
 RESPONSE: A JSON list of countries sorted in alphabetical order.
 
 

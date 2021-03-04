@@ -145,13 +145,15 @@ def get_productioncountry_movies_table(movies_dictionary):
                     genre_dict= json.loads(element) 
                     genre_id = genre_dict.get('iso_3166_1')
                     genre_name = genre_dict.get('name')
-                    movie_genres.append(genre_name)
+                    
                     
                     try:
                         dictionary[genre_name]
+                        movie_genres.append(dictionary[genre_name])
                     except:
-                        dictionary[genre_name] = genre_dict.get('iso_3166_1')
+                        dictionary[genre_name] = count
                         genres_table.append([count, genre_name])
+                        movie_genres.append(dictionary[genre_name])
                         count = count + 1
         genres_movies_table.append([movie_id, title, movie_genres])
     return genres_movies_table
@@ -202,7 +204,7 @@ def get_companies_table(movies_dictionary):
         for genre in regular:
             test = genre.split(', {')
             for element in test:
-                print(element)
+                
                 if element != '':
                     if element[0] != '{':
                         element = '{' + element
@@ -214,22 +216,22 @@ def get_companies_table(movies_dictionary):
                         string_single_quote = re.findall("\'", string_double_quotes[0])
                         if (string_single_quote):
                             changed = False
-                            print('strange')
+                            
                             clean_string = re.sub("\'", " ", string_double_quotes[0])
-                            print(clean_string)
+                            
                             element = re.sub(string_double_quotes[0], clean_string, element)
 
                     werid_name = re.findall("'(.*?)'", element)
 
                     if (werid_name and changed):
-                        print('we')
+                        
                         clean_string_2 = re.sub("\"", " ", werid_name[1])
-                        print(clean_string_2)
+                        
                         element = re.sub(werid_name[1], clean_string_2, element)
 
                     element = re.sub("\'", "\"", element)
-                    print(element)
-                    print('-------------')
+                    
+                    
                     genre_dict= json.loads(element) 
                     genre_id = genre_dict.get('id')
                     movie_genres.append(genre_id)
@@ -257,7 +259,7 @@ def create_companies_table(movies_dictionary):
         for genre in regular:
             test = genre.split(', {')
             for element in test:
-                print(element)
+                
                 if element != '':
                     if element[0] != '{':
                         element = '{' + element
@@ -269,22 +271,21 @@ def create_companies_table(movies_dictionary):
                         string_single_quote = re.findall("\'", string_double_quotes[0])
                         if (string_single_quote):
                             changed = False
-                            print('strange')
+                            
                             clean_string = re.sub("\'", " ", string_double_quotes[0])
-                            print(clean_string)
+                            
                             element = re.sub(string_double_quotes[0], clean_string, element)
 
                     werid_name = re.findall("'(.*?)'", element)
 
                     if (werid_name and changed):
-                        print('we')
+                        
                         clean_string_2 = re.sub("\"", " ", werid_name[1])
-                        print(clean_string_2)
+                        
                         element = re.sub(werid_name[1], clean_string_2, element)
 
                     element = re.sub("\'", "\"", element)
-                    print(element)
-                    print('-------------')
+                    
                     genre_dict= json.loads(element) 
                     genre_id = genre_dict.get('id')
                     movie_genres.append(genre_id)
@@ -356,14 +357,15 @@ def get_languages_table(movies_dictionary):
                     element = re.sub("\'", "\"", element)
                     genre_dict= json.loads(element) 
                     genre_id = genre_dict.get('iso_639_1')
-                    movie_genres.append(genre_id)
                     genre_name = genre_dict.get('name')
                     
                     try:
                         dictionary[genre_name]
+                        movie_genres.append(dictionary[genre_name])
                     except:
-                        dictionary[genre_name] = genre_dict.get('iso_639_1')
-                        genres_table.append([count, genre_id, genre_name])
+                        dictionary[genre_name] = count
+                        genres_table.append([count, genre_name])
+                        movie_genres.append(dictionary[genre_name])
                         count = count + 1
         genres_movies_table.append([movie_id, title, movie_genres])
     return genres_movies_table
