@@ -17,6 +17,8 @@ from config import password
 from config import database
 from config import user
 
+from create_queries import create_movie_table_query
+
 def connect_database():
     try:
         connection = psycopg2.connect(database=database, user=user, password=password)
@@ -28,46 +30,61 @@ def connect_database():
 
 @api.route('/movies') 
 def get_movies():
+    movies =[]
     # http://localhost:5000/api/movies?title=tes&language=es
     title = flask.request.args.get('title')
+    budget = flask.request.args.get('budget')
     language = flask.request.args.get('language')
     rating = flask.request.args.get('rating')
     company = flask.request.args.get('company')
     country = flask.request.args.get('country')
-    years = flask.request.args.get('years')
+    release_year = flask.request.args.get('years')
     languages = flask.request.args.get('languages')
-    renevue = flask.request.args.get('revenue')
+    revenue = flask.request.args.get('revenue')
+    runtime = flask.request.args.get('runtime')
     genre = flask.request.args.get('genre')
 
-    message={
-        'title': title,
-        'language': language,
-        'rating': rating,
-        'company': company,
-    }
+    connection = connect_database()
 
-    query = '''SELECT movies.movie_id, 
+    where_portion = create_movie_table_query({
+        'title': title,
+        'rating': rating,
+        'revenue': revenue,
+        'runtime': runtime,
+        'release_year': release_year,
+        'budget': budget
+    })
+    
+    query = '''SELECT 
+        movies.id, 
         movies.title,
-        movies.poster_path,
-        movies.year,
-        movies.genre,
+        movies.release_year,
         movies.rating
         FROM 
-            movies,
-            languages,
-            companies,
-            countries,
-            genres,
-            movie_langs,
-            movie_companies,
-            movie_countries,
-            movie_genres
-        WHERE 
-        
-        
-        ;'''
+        movies
+        WHERE
+        {}
+        ;'''.format(where_portion)
 
-    return json.dumps(message)
+    print(query)        
+
+    try:
+        cursor = connection.cursor()
+        cursor.execute(query)
+        for row in cursor:
+            movie_dict = { 
+            'title': row[1],
+            'poster_path': str(row[2]),
+            'year': int(row[3]),
+            'rating': float(row[4])
+            }
+        movies.append(movie_dict)
+            
+    except Exception as e:
+        print(e)
+        exit()
+
+    return json.dumps(movies)
 
 @api.route('/hello') 
 def get_hello():
