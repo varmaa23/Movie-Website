@@ -1,9 +1,7 @@
 '''
-    books_webapp.py
-    Jeff Ondich, 25 April 2016
-    Updated 4 November 2020
-
-    Tiny Flask API to support the tiny books web application.
+    Authors:
+    Valentina Guerrero
+    Aishwarya Varma 
 '''
 import sys
 import flask
@@ -39,7 +37,6 @@ def get_movies():
     company = flask.request.args.get('company')
     country = flask.request.args.get('country')
     release_year = flask.request.args.get('years')
-    languages = flask.request.args.get('languages')
     revenue = flask.request.args.get('revenue')
     runtime = flask.request.args.get('runtime')
     genre = flask.request.args.get('genre')
@@ -52,18 +49,31 @@ def get_movies():
         'revenue': revenue,
         'runtime': runtime,
         'release_year': release_year,
-        'budget': budget
+        'budget': budget,
+        'language': language,
+        'country': country,
+        'company': company,
+        'genre': genre
     })
+    print(where_portion)
     
-    query = '''SELECT 
+    query = '''SELECT DISTINCT
         movies.id, 
         movies.title,
         movies.release_year,
-        movies.rating
+        movies.rating,
+        languages.lang_abbrev
         FROM 
-        movies
-        WHERE
-        {}
+        movies,
+        languages,
+	    movie_langs,
+        countries,
+        movie_countries,
+        companies,
+        movie_companies,
+        genres,
+        movie_genres
+        WHERE {}
         ;'''.format(where_portion)
 
     print(query)        
@@ -72,13 +82,14 @@ def get_movies():
         cursor = connection.cursor()
         cursor.execute(query)
         for row in cursor:
-            movie_dict = { 
-            'title': row[1],
-            'poster_path': str(row[2]),
-            'year': int(row[3]),
-            'rating': float(row[4])
+            movie_dict = {
+                'id': row[0],
+                'title': row[1],
+                'release_year': row[2],
+                'rating': float(row[3]),
+                'language': row[4]
             }
-        movies.append(movie_dict)
+            movies.append(movie_dict)
             
     except Exception as e:
         print(e)
