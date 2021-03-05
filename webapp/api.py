@@ -32,14 +32,14 @@ def get_movies():
     # http://localhost:5000/api/movies?title=tes&language=es
     title = flask.request.args.get('title')
     budget = flask.request.args.get('budget')
-    language = flask.request.args.get('language')
+    language = flask.request.args.get('languages')
     rating = flask.request.args.get('rating')
     company = flask.request.args.get('company')
-    country = flask.request.args.get('country')
+    country = flask.request.args.get('countries')
     release_year = flask.request.args.get('years')
     revenue = flask.request.args.get('revenue')
     runtime = flask.request.args.get('runtime')
-    genre = flask.request.args.get('genre')
+    genre = flask.request.args.get('genres')
 
     connection = connect_database()
 
@@ -61,8 +61,7 @@ def get_movies():
         movies.id, 
         movies.title,
         movies.release_year,
-        movies.rating,
-        languages.lang_abbrev
+        movies.rating
         FROM 
         movies,
         languages,
@@ -74,9 +73,12 @@ def get_movies():
         genres,
         movie_genres
         WHERE {}
+        ORDER BY movies.release_year DESC
         ;'''.format(where_portion)
 
-    print(query)        
+       
+    
+    
 
     try:
         cursor = connection.cursor()
@@ -86,8 +88,7 @@ def get_movies():
                 'id': row[0],
                 'title': row[1],
                 'release_year': row[2],
-                'rating': float(row[3]),
-                'language': row[4]
+                'rating': float(row[3])
             }
             movies.append(movie_dict)
             

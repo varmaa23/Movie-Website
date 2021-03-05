@@ -47,7 +47,7 @@ def create_movie_table_query(items_dictionary):
         
 
     '''.format(query_dictionary['title'], query_dictionary['rating'], query_dictionary['revenue'], query_dictionary['runtime'], query_dictionary['release_year'], query_dictionary['budget'],query_dictionary['language'], query_dictionary['country'], query_dictionary['company'], query_dictionary['genre'] )
-    
+    print(query_skeleton)
     return query_skeleton
 
 
