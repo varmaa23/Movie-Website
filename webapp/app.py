@@ -31,6 +31,11 @@ def test():
 def results():
     return flask.render_template('results.html')
 
+
+@app.route('/movie')
+def movie():
+    return flask.render_template('movie.html')
+
 # @app.route('/movie/<movie_id>')
 # def movies_page():
 #     return flask.render_template('other.html')
