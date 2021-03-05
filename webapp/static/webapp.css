@@ -103,9 +103,10 @@ button {
 
 .input{
 
-    background-color: #C4C4C4;
+    background-color: white;
     border: 0.1px solid;
     height: 2.3rem;
+    border-radius: 4px;
 
 }
 
@@ -147,7 +148,7 @@ button {
 
 .results-main-div{
     display: grid;
-    grid-template-columns: 40% 58%;
+    grid-template-columns: 30% 65%;
     grid-gap: 2%;
 
 }
@@ -213,4 +214,12 @@ align-items: center;}
     /* align-items: center; */
     flex-direction: column;
     margin: 1.5rem 0;
+}
+
+.nav{
+    height: 10vh;
+}
+
+.refine-results{
+    height: 90vh;
 }
