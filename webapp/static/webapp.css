@@ -186,6 +186,7 @@ button {
 
 .title-margin-left{
     margin-left: 3rem;
+    margin-bottom: 0.5rem;
 }
 .align{
 display: flex;
@@ -203,4 +204,13 @@ align-items: center;}
 .movie-grid{
     display: grid;
     grid-template-columns: 30% 70%;
+}
+
+
+.column-justify{
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    flex-direction: column;
+    margin: 1.5rem 0;
 }
