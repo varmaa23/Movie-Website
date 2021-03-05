@@ -189,4 +189,8 @@ def get_countries():
 
     return json.dumps(countries)
 
+@api.route('/help') 
+def display_help():
+    return flask.render_template('help.txt')
+    
 

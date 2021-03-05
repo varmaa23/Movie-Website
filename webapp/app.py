@@ -21,6 +21,11 @@ app.register_blueprint(api.api, url_prefix='/api')
 def home():
     return flask.render_template('index.html')
 
+
+@app.route('/home')
+def test():
+    return flask.render_template('other.html')
+
 # @app.route('/movie/<movie_id>')
 # def movies_page():
 #     return flask.render_template('other.html')
