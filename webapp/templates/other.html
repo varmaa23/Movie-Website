@@ -3,6 +3,7 @@
         <head>
             <title>Movies</title>
             <link rel="stylesheet" type="text/css" href="../static/webapp.css">
+            <script type="text/javascript" src="../static/homepage.js"></script>
         </head>
         <body>
             <div class="primarycolor space_between">
@@ -15,22 +16,28 @@
 
             </div>
 
-            <div>
-                <div class="primarycolor">
-                    <h3>
+            <div class="center vh60">
+                <div class="primarycolor border">
+                    <div class="extra-padding">
+                    <h4 class="search_title">
                         Search movies, titles, release year, production company
-                    </h3>
+                    </h4>
 
-                    <div>
-
-                        <div>
-
+                    <div class="center">
+                        <form class="form">
+                            <div class="sub-form">
+                            <input class="input" id="input" placeholder="Search">
+                            <a class="home-dropdown" id="title">Title: <span id="title_text"> </span></a>
+                            <a class="home-dropdown" id="genre">Genre: <span id="genre_text"> </span></a>
+                            <a class="home-dropdown" id="company">Production Company: <span id="company_text"> </span></a>
                         </div>
-                        <button>
-
+                            </input>
+                        <button id="button">
+                            Search
                         </button>
+                    </form>
                     </div>
-
+                </div>
                 </div>
             </div>
 
