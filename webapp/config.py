@@ -1,3 +1,3 @@
-database = 'test_movies'
-user = 'valentinaguerrero'
-password = 'Perro12345678?'
+database = 'movie_database'
+user = 'swapnavarma'
+password = ''

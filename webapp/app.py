@@ -19,7 +19,7 @@ app.register_blueprint(api.api, url_prefix='/api')
 # This route delivers the user your site's home page.
 @app.route('/')
 def home():
-    return flask.render_template('index.html')
+    return flask.render_template('other.html')
 
 
 @app.route('/home')

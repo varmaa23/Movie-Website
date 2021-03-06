@@ -192,6 +192,6 @@ def get_countries():
 
 @api.route('/help') 
 def display_help():
-    return flask.render_template('help.txt')
+    return flask.render_template('help.html')
     
 
