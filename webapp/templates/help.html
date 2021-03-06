@@ -6,18 +6,20 @@
 
         <body>
             <h2>REQUEST: /movies</h2>
-            <p>This endpoint is for the list of filtered movies. The results are constrained depending on the following optional GET parameters, which will be combined by a boolean AND:</p>
+            <p>This endpoint is for the list of filtered movies. </p>
+
+                <p>GET parameters:<p>
+                <p>The results are constrained depending on the following optional GET parameters, which will be combined by a boolean AND:</p>
             <ol>
-                <li>search_everything = search_text // when searched, match the unser-given keyword to any field in the database</li>
-                <li>title=title_list </li>
-                <li>language=language_abbrev</li>
-                <li>rating=rating_range</li>
-                <li>prod_companies=companies_list</li>
-                <li>prod_countries=countries_list</li>
-                <li>years=year_range</li>
-                <li>spoken_languages=lang_list</li>
-                <li>revenue=revenue_range</li>
-                <li>genre=genre_list</li>
+                <li>title (Optional, default: ' ') </li>
+                <li>language (Optional, default: ' ') </li>
+                <li>rating (Optional, default: ' ')</li>
+                <li>prod_companies (Optional, default: ' ')</li>
+                <li>prod_countries (Optional, default: ' ')</li>
+                <li>years (Optional, default: ' ')</li>
+                <li>spoken_languages (Optional, default: ' ')</li>
+                <li>revenue (Optional, default: ' ')</li>
+                <li>genre (Optional, default: ' ')</li>
 
             </ol>
             <p>RESPONSE: A JSON list of dictionaries, each of which represents one movie, sorted by descending order of release date. Each book dictionary will have the
@@ -41,6 +43,11 @@
 
         <h2>REQUEST: /movie/{movie_id}</h2>
         <p>This endpoint is for an specific movie.</p>
+        <p>GET parameters<p>
+             <ol>
+               <li>movie_id (Mandatory)</li>
+            </ol>
+
         <p>REPONSE: A JSON dictionary that represents a specific movie with the following fields:</p>
         <ol>
             <li>title --  (string) // the title of the movie</li>
