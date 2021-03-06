@@ -6,8 +6,9 @@ window.onload = initialize;
 function initialize() {
 
 var button = document.getElementById('submit');
-button.addEventListener('click', get_movies);
 button.addEventListener('click', delete_html);
+button.addEventListener('click', get_movies);
+
 
 if (window.location.search.split('?')){
     let url = window.location.search.split('?');
@@ -203,7 +204,9 @@ function create_html(title, genres, rating, release_year, id){
 
 
 function delete_html(){
-    let main_content_div = document.getElementById('card_div');
-    main_content_div.removeChild(main_content_div.childNodes[0]);    
+    let myNode = document.getElementById('main-div');
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.lastChild);
+      }
 }
 
