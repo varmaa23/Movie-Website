@@ -1,9 +1,13 @@
 def create_movie_table_query(items_dictionary):
     query_dictionary = {}
     language_string = ''
+    numbers = ['rating', 'revenue', 'runtime', 'release_year', 'budget']
     for item in items_dictionary:
         if items_dictionary[item]:
-            query_dictionary[item] = "= '{}'".format(items_dictionary[item])
+            if item not in numbers:
+                query_dictionary[item] = "LIKE '%{}%'".format(items_dictionary[item])
+            else:
+                query_dictionary[item] = "= '{}'".format(items_dictionary[item])
         else:
             query_dictionary[item] = 'IS NOT NULL'
 

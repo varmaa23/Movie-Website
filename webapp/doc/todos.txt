@@ -1,6 +1,2 @@
-1. Clean data for tables
-2. Endpoints () 
-3. HTML (home page and results page)
-4. Javascript 
-5. CSS
+1. If there's apostrophes in names of titles, double them!!!
 

@@ -34,7 +34,7 @@ def get_movies():
     budget = flask.request.args.get('budget')
     language = flask.request.args.get('languages')
     rating = flask.request.args.get('rating')
-    company = flask.request.args.get('company')
+    company = flask.request.args.get('companies')
     country = flask.request.args.get('countries')
     release_year = flask.request.args.get('years')
     revenue = flask.request.args.get('revenue')

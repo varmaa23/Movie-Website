@@ -4,44 +4,65 @@ window.onload = initialize;
 
 function initialize() {
     let button = document.getElementById('button');
+    let search_all = document.getElementById('all');
     let title = document.getElementById('title');
     let genre = document.getElementById('genre');
-    let language = document.getElementById('company');
+    let language = document.getElementById('language');
+    let company = document.getElementById('company');
+    let year = document.getElementById('year');
     let input = document.getElementById('input');
-    let url_input =  capitalize_first_letter(input.value);
-    //genre.href = `${url}:${port}/results?genre=${input.value}`;
+    
     input.addEventListener('input', (event) => {
-        console.log(event.target.value)
-        //title.classList.add('show')
-        genre.classList.add('show')
-        language.classList.add('show')
-        //title.innerText = 'Title: ' + event.target.value
-        genre.innerText = 'Genre: ' + event.target.value
-        language.innerText = 'Language: ' + event.target.value
-
-        //title.addEventListener('click', get_movies);
-        genre.addEventListener('click', search_by_genre);
-        //language.addEventListener('click', get_movies);
-
+        
+        header_html_dict = {
+            'All: ': search_all,
+            'Title: ': title,
+            'Genre: ': genre,
+            'Language: ': language,
+            'Production: ': company,
+            'Year: ': year
+        }
+        change_inner_text(event, header_html_dict)
+        
+        
     });
 
-    
+    title.addEventListener('click', function(){
+        set_url('title')
+    })
+    genre.addEventListener('click', function(){
+        set_url('genres')
+    })
+    language.addEventListener('click', function(){
+        set_url('languages')
+    })
+    company.addEventListener('click', function(){
+        set_url('companies')
+    })
+    year.addEventListener('click', function(){
+        set_url('years')
+    })
+
+
 }
 
 
-const capitalize_first_letter = (string) => {
-    string.charAt(0).toUpperCase() + string
-    return string
+const change_inner_text = (event, header_html_dict) => {
+    for (let [key, value] of Object.entries(header_html_dict)) {
+        value.classList.add('show')
+        value.innerHTML = `${key}` +  event.target.value
+    }
 }
 
-function search_by_genre(){
-    let url_input =  capitalize_first_letter(input.value);
+
+
+function set_url (endpoint){
+    let url_input =  input.value;
     protocol = window.location.protocol
     hostname = window.location.hostname
     port = window.location.port
-    value = capitalize_first_letter(input.value)
 
-    url = `${protocol}//${hostname}:${port}/results?genres=${url_input}`
+    url = `${protocol}//${hostname}:${port}/results?${endpoint}=${url_input}`
    
     window.open(url, "_self")
 
