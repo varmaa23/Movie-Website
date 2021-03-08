@@ -1,3 +1,3 @@
-database = 'movie_database'
-user = 'swapnavarma'
+database = ''
+user = ''
 password = ''

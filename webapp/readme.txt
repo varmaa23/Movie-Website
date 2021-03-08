@@ -3,7 +3,7 @@ AUTHORS: Aishwarya Varma and Valentina Guerrero
 DATA: A dataset that contains information (title, overview, revenue, release year) of thousands of movies. 
 
 FEATURES CURRENTLY WORKING:
-- Home Page -- search bar for genres on homepage
+- Home Page -- search bar for genres on homepage (test valid genres such as family, romance, horror)
 - Display Results -- is functional
 - Display Results -- Dropdown bars for Genre, Language, and Country correctly filter data
 - LOGO -- goes to homepage
