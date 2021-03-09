@@ -45,7 +45,7 @@ def create_movie_table_query(items_dictionary):
         AND
         movie_companies.company_id = companies.id
         AND
-        movie_genres.movie_id = movies.id
+        movies.id = movie_genres.movie_id
         AND
         movie_genres.genre_id = genres.id
         
@@ -54,6 +54,22 @@ def create_movie_table_query(items_dictionary):
     print(query_skeleton)
     return query_skeleton
 
+def create_genres_table_query(movie_title):
+    query = '''
+    SELECT genres.genre
+    FROM 
+    movies,
+    genres,
+    movie_genres
+    WHERE
+    movies.title {}
+    AND
+    movies.id = movie_genres.movie_id
+    AND 
+    movie_genres.genre_id = genres.id
+    ;'''.format(movie_title)
+
+    return query
 
 
 

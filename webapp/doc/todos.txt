@@ -1,2 +1,2 @@
-1. If there's apostrophes in names of titles, double them!!!
-
+1. Create API endpoint for search all
+2. If there's apostrophes in names of titles, double them!!!

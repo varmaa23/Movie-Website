@@ -62,7 +62,8 @@ def get_movies():
         movies.title,
         movies.release_year,
         movies.rating,
-        movies.poster_path
+        movies.poster_path,
+        genres.genre
         FROM 
         movies,
         languages,
@@ -77,10 +78,6 @@ def get_movies():
         ORDER BY movies.release_year DESC
         ;'''.format(where_portion)
 
-       
-    
-    
-
     try:
         cursor = connection.cursor()
         cursor.execute(query)
@@ -90,7 +87,8 @@ def get_movies():
                 'title': row[1],
                 'release_year': row[2],
                 'rating': float(row[3]),
-                'poster_path': str(row[4])
+                'poster_path': str(row[4]),
+                'genre': str(row[5])
               
             }
             movies.append(movie_dict)
