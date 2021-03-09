@@ -15,7 +15,7 @@ from config import password
 from config import database
 from config import user
 
-from create_queries import create_movie_table_query
+from create_queries import create_movie_table_query, create_genres_table_query
 
 def connect_database():
     try:
@@ -62,8 +62,7 @@ def get_movies():
         movies.title,
         movies.release_year,
         movies.rating,
-        movies.poster_path,
-        genres.genre
+        movies.poster_path
         FROM 
         movies,
         languages,
@@ -87,9 +86,7 @@ def get_movies():
                 'title': row[1],
                 'release_year': row[2],
                 'rating': float(row[3]),
-                'poster_path': str(row[4]),
-                'genre': str(row[5])
-              
+                'poster_path': str(row[4])
             }
             movies.append(movie_dict)
             
@@ -104,16 +101,96 @@ def get_hello():
     message = 'hey there'
     return json.dumps(message)
 
+# @api.route('/movie/genres/<movie_id>')
+# def get_movie_genres(movie_id):
+#     genres = []
+#     connection = connect_database()
+#     query = create_genres_table_query()
+
+#     try:
+#         cursor = connection.cursor()
+#         cursor.execute(query)
+#         for row in cursor:
+#             genre_dict = {'genre': row[0]}
+#             genres.append(genre_dict)
+
+#     except Exception as e:
+#         print(e)
+#         exit()
+
+#     return json.dumps(genres)
+
 
 @api.route('/movie/<movie_id>') 
 def get_movie(movie_id):
-    movies = []
+    movie_dict = {}
     connection = connect_database()
-    query = '''SELECT * FROM movies WHERE id = {};'''.format(movie_id)
+
+    genre_query = '''
+    SELECT genres.genre
+    FROM 
+    movies,
+    genres,
+    movie_genres
+    WHERE
+    movies.id = {}
+    AND
+    movies.id = movie_genres.movie_id
+    AND
+    movie_genres.genre_id = genres.id
+    ;'''.format(movie_id)
+
+    language_query = '''
+    SELECT languages.lang_full
+    FROM 
+    movies,
+    languages,
+    movie_langs
+    WHERE 
+    movies.id = {}
+    AND
+    movies.id = movie_langs.movie_id
+    AND
+    movie_langs.lang_id = languages.id
+    ;'''.format(movie_id)
+
+    countries_query = '''
+    SELECT countries.country_name
+    FROM 
+    countries,
+    movies,
+    movie_countries
+    WHERE 
+    movies.id = {}
+    AND 
+    movies.id = movie_countries.movie_id
+    AND
+    movie_countries.country_id = countries.id
+    ;'''.format(movie_id)
+
+    companies_query = '''
+    SELECT companies.company_name
+    FROM 
+    companies,
+    movies,
+    movie_companies
+    WHERE 
+    movies.id = {}
+    AND 
+    movies.id = movie_companies.movie_id
+    AND
+    movie_companies.company_id = companies.id
+    ;'''.format(movie_id)
+
+    movie_query = '''SELECT * FROM movies WHERE id = {};'''.format(movie_id)
+
+
 
     try:
         cursor = connection.cursor()
-        cursor.execute(query)
+        cursor.execute(movie_query)
+        
+       
         for row in cursor:
             movie_dict = { 
             'id': row[0],
@@ -127,7 +204,30 @@ def get_movie(movie_id):
             'release_year': int(row[8]),
             'poster_path': row[9]
             }
-        movies.append(movie_dict)
+
+        cursor.execute(genre_query)
+        genres = []
+        for row in cursor:
+            genres.append(row)
+        movie_dict['genres'] = genres
+
+        cursor.execute(language_query)
+        languages = []
+        for row in cursor:
+            languages.append(row)
+        movie_dict['languages'] = languages
+
+        cursor.execute(countries_query)
+        countries = []
+        for row in cursor:
+            countries.append(row)
+        movie_dict['countries'] = countries
+
+        cursor.execute(companies_query)
+        companies = []
+        for row in cursor:
+            companies.append(row)
+        movie_dict['companies'] = companies
             
     except Exception as e:
         print(e)

@@ -101,7 +101,7 @@ function fetch_movies(endpoint_parameters) {
         console.log(movies)
         for (let i = 0; i < 20; i++){
             console.log(movies[i])
-            create_html(movies[i].title, movies[i].genre, movies[i].rating, movies[i].release_year, movies[i].id, movies[i].poster_path)
+            create_html(movies[i].title, movies[i].rating, movies[i].release_year, movies[i].id, movies[i].poster_path)
         }
     })
 
@@ -149,7 +149,7 @@ function get_filters(){
 }
 
 
-function create_html(title, genres, rating, release_year, id, poster_path){
+function create_html(title, rating, release_year, id, poster_path){
     let main_content_div = document.getElementById('main-div');
     let card_div = document.createElement('div');
     card_div.setAttribute('id', 'card_div')
@@ -170,11 +170,6 @@ function create_html(title, genres, rating, release_year, id, poster_path){
     movie_title.appendChild(title_text)
     main_info.appendChild(movie_title);
 
-    let movie_genres = document.createElement('p');
-    let genres_text = document.createTextNode(genres);
-    movie_genres.appendChild(genres_text)
-    main_info.appendChild(movie_genres);
-
     let movie_release_year = document.createElement('p');
     let year_text = document.createTextNode(release_year);
     movie_release_year.appendChild(year_text)
@@ -192,6 +187,9 @@ function create_html(title, genres, rating, release_year, id, poster_path){
     main_info.appendChild(movie_more);
 
     let movie_rating = document.createElement('p');
+    if (rating == 0) {
+        rating = 'Unrated'
+    }
     let rating_text = document.createTextNode(rating);
     movie_rating.appendChild(rating_text)
     rating_div.appendChild(movie_rating);

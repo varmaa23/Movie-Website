@@ -54,7 +54,7 @@ def create_movie_table_query(items_dictionary):
     print(query_skeleton)
     return query_skeleton
 
-def create_genres_table_query(movie_title):
+def create_genres_table_query(movie_id):
     query = '''
     SELECT genres.genre
     FROM 
@@ -62,12 +62,9 @@ def create_genres_table_query(movie_title):
     genres,
     movie_genres
     WHERE
-    movies.title {}
-    AND
-    movies.id = movie_genres.movie_id
-    AND 
-    movie_genres.genre_id = genres.id
-    ;'''.format(movie_title)
+    movies.id = '{}'
+    
+    ;'''.format(movie_id)
 
     return query
 
