@@ -61,7 +61,8 @@ def get_movies():
         movies.id, 
         movies.title,
         movies.release_year,
-        movies.rating
+        movies.rating,
+        movies.poster_path
         FROM 
         movies,
         languages,
@@ -88,7 +89,9 @@ def get_movies():
                 'id': row[0],
                 'title': row[1],
                 'release_year': row[2],
-                'rating': float(row[3])
+                'rating': float(row[3]),
+                'poster_path': str(row[4])
+              
             }
             movies.append(movie_dict)
             

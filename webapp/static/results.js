@@ -98,8 +98,8 @@ function fetch_movies(endpoint_parameters) {
 
     .then(function(movies) {
         console.log(movies)
-        for (let i = 0; i < 10; i++){
-            create_html(movies[i].title, movies[i].genres, movies[i].rating, movies[i].release_year, movies[i].id)
+        for (let i = 0; i < 20; i++){
+            create_html(movies[i].title, movies[i].genres, movies[i].rating, movies[i].release_year, movies[i].id, movies[i].poster_path)
         }
     })
 
@@ -148,15 +148,17 @@ function get_filters(){
 }
 
 
-function create_html(title, genres, rating, release_year, id){
+function create_html(title, genres, rating, release_year, id, poster_path){
     let main_content_div = document.getElementById('main-div');
     let card_div = document.createElement('div');
     card_div.setAttribute('id', 'card_div')
     let card = document.createElement('div');
     card.classList.add('movie-card')
 
-    let image = document.createElement('div');
+    let image = document.createElement('img');
     image.classList.add('movie-image', 'secondary-color')
+    image.src = `https://image.tmdb.org/t/p/w185${poster_path}`
+    console.log(`https://image.tmdb.org/t/p/original${poster_path}`)
 
     let main_info = document.createElement('div');
     main_info.classList.add('movie-card-margin')
