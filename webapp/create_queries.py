@@ -70,4 +70,18 @@ def create_genres_table_query(movie_id):
 
 
 
-        
+def create_search_all_query(search_string):
+
+    if isinstance(search_string, str):
+        string_keyword = "LIKE '%{}%'".format(search_string)
+        int_keyword = 'IS NOT NULL'
+    if isinstance(search_string, int):
+        int_keyword = "= '{}'".format(search_string)
+        string_keyword = 'IS NOT NULL'
+
+    query_skeleton = '''
+        title {string_key}
+      
+'''.format(string_key = string_keyword, int_key=  int_keyword)
+    print(query_skeleton)
+    return query_skeleton

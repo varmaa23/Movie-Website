@@ -15,7 +15,7 @@ from config import password
 from config import database
 from config import user
 
-from create_queries import create_movie_table_query, create_genres_table_query
+from create_queries import create_movie_table_query, create_genres_table_query, create_search_all_query
 
 def connect_database():
     try:
@@ -25,6 +25,32 @@ def connect_database():
         print(e)
         exit()
     
+@api.route('/all/<keyword>') 
+def search_all(keyword):
+    movies =[]
+    connection = connect_database()
+
+    where_portion = create_search_all_query(keyword)
+    query = '''SELECT * FROM movies WHERE title LIKE '%{}%';'''.format(keyword)
+    print(query)
+    try:
+        cursor = connection.cursor()
+        cursor.execute(query)
+        for row in cursor:
+            movie_dict = {
+                'id': row[0],
+                'title': row[1],
+                'release_year': row[2],
+                'rating': float(row[3]),
+                'poster_path': str(row[4])
+            }
+            movies.append(movie_dict)
+            
+    except Exception as e:
+        print(e)
+        exit()
+
+    return json.dumps(movies)
 
 @api.route('/movies') 
 def get_movies():
@@ -101,24 +127,6 @@ def get_hello():
     message = 'hey there'
     return json.dumps(message)
 
-# @api.route('/movie/genres/<movie_id>')
-# def get_movie_genres(movie_id):
-#     genres = []
-#     connection = connect_database()
-#     query = create_genres_table_query()
-
-#     try:
-#         cursor = connection.cursor()
-#         cursor.execute(query)
-#         for row in cursor:
-#             genre_dict = {'genre': row[0]}
-#             genres.append(genre_dict)
-
-#     except Exception as e:
-#         print(e)
-#         exit()
-
-#     return json.dumps(genres)
 
 
 @api.route('/movie/<movie_id>') 
