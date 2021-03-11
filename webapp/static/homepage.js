@@ -15,7 +15,7 @@ function initialize() {
     input.addEventListener('input', (event) => {
         
         header_html_dict = {
-            'All: ': search_all,
+            'All: ': all,
             'Title: ': title,
             'Genre: ': genre,
             'Language: ': language,
@@ -26,6 +26,10 @@ function initialize() {
         
         
     });
+
+    search_all.addEventListener('click', function() {
+        set_url('all')
+    })
 
     title.addEventListener('click', function(){
         set_url('title')
@@ -42,6 +46,7 @@ function initialize() {
     year.addEventListener('click', function(){
         set_url('years')
     })
+
 
 
 }

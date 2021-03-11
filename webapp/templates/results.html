@@ -30,12 +30,7 @@
                             <label>
                                 Title
                             </label>
-                                <select name="Genre" id="cars" class="input">
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="mercedes">Mercedes</option>
-                                    <option value="audi">Audi</option>
-                                  </select>
+                                  <input class="input" id="title" autocomplete="off"></input</div>
                             
                         </div>
                         <div class="column-justify">
@@ -62,12 +57,18 @@
                         <label>
                             Rating
                         </label>
-                            <select name="Genre" id="cars" class="input">
-                                <option value="volvo">Volvo</option>
-                                <option value="saab">Saab</option>
-                                <option value="mercedes">Mercedes</option>
-                                <option value="audi">Audi</option>
-                              </select>
+                        <select name="Rating" id="rating" class="input">
+                            <option>All</option>
+                            <option>1.0 <span>+</span></option>
+                            <option>2.0 <span>+</span></option>
+                            <option>3.0 <span>+</span></option>
+                            <option>4.0 <span>+</span></option>
+                            <option>5.0 <span>+</span></option>
+                            <option>6.0 <span>+</span></option>
+                            <option>7.0 <span>+</span></option>
+                            <option>8.0 <span>+</span></option>
+                            <option>9.0 <span>+</span></option>
+                        </select>
                         
                     </div>
 
@@ -84,12 +85,7 @@
                         <label>
                             Release year
                         </label>
-                            <select name="Genre" id="cars" class="input">
-                                <option value="volvo">Volvo</option>
-                                <option value="saab">Saab</option>
-                                <option value="mercedes">Mercedes</option>
-                                <option value="audi">Audi</option>
-                              </select>
+                        <input class="input" id="years" autocomplete="off"></input</div>
                         
                     </div>
                     </form>
@@ -102,9 +98,9 @@
                 </div>
 
 
-                <div class="">
+                <div class="results" id="results">
 
-                    <h2 style="text-align: center;">Results</h2>
+                    <h2  id='results_title' style="text-align: center;">Results</h2>
 
                     <div id="main-div">
 

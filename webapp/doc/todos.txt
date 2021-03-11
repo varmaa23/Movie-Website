@@ -1,2 +1,4 @@
-1. Create API endpoint for search all
-2. If there's apostrophes in names of titles, double them!!!
+1. If there's apostrophes in names of titles, double them!!!
+2. Implement Advanced Search
+3. Load more results into pages 
+4. Make Refine Results static

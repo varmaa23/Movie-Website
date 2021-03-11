@@ -42,7 +42,6 @@ function fetch_movies(id_value) {
     .then((response) => response.json())
 
     .then(function(movie) {
-        console.log(movie)
        change_html(movie.title, movie.overview, movie.budget, movie.revenue, movie.rating, movie.runtime, movie.release_year, movie.genres, movie.languages, movie.companies, movie.countries)
     })
 

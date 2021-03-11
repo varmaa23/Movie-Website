@@ -1,3 +1,5 @@
+# Authors: Valentina Guerrero and Aishwarya Varma
+
 def create_movie_table_query(items_dictionary):
     query_dictionary = {}
     language_string = ''
@@ -7,7 +9,10 @@ def create_movie_table_query(items_dictionary):
             if item not in numbers:
                 query_dictionary[item] = "LIKE '%{}%'".format(items_dictionary[item])
             else:
-                query_dictionary[item] = "= '{}'".format(items_dictionary[item])
+                if item == 'rating':
+                    query_dictionary[item] = ">= '{}'".format(items_dictionary[item])
+                else:
+                    query_dictionary[item] = "= '{}'".format(items_dictionary[item])
         else:
             query_dictionary[item] = 'IS NOT NULL'
 
@@ -71,17 +76,26 @@ def create_genres_table_query(movie_id):
 
 
 def create_search_all_query(search_string):
-
-    if isinstance(search_string, str):
-        string_keyword = "LIKE '%{}%'".format(search_string)
-        int_keyword = 'IS NOT NULL'
-    if isinstance(search_string, int):
+    if search_string.isnumeric():
         int_keyword = "= '{}'".format(search_string)
-        string_keyword = 'IS NOT NULL'
+        string_keyword = "LIKE '%{}%'".format(search_string)
+        query_skeleton = '''
+            release_year {int_key}
+            OR
+            rating {int_key}
+            OR
+            runtime {int_key}
+            OR
+            title {string_key}
 
-    query_skeleton = '''
-        title {string_key}
-      
-'''.format(string_key = string_keyword, int_key=  int_keyword)
+
+        '''.format(int_key=  int_keyword, string_key = string_keyword)
+    else:
+        string_keyword = "LIKE '%{}%'".format(search_string)
+        query_skeleton = '''
+            title {string_key}
+
+        '''.format(string_key = string_keyword)
+        
     print(query_skeleton)
     return query_skeleton

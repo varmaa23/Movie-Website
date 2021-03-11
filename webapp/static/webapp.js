@@ -28,7 +28,6 @@ function get_api_base_url(){
 }
 
 function fetch_information(input_value) {
-    console.log(input_value)
     var url = get_api_base_url() + `/movie/${input_value}`;
 
     fetch(url, {method: 'get'})

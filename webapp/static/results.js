@@ -5,48 +5,45 @@ window.onload = initialize;
 
 function initialize() {
 
-var button = document.getElementById('submit');
-button.addEventListener('click', delete_html);
-button.addEventListener('click', get_movies);
+    var refine_results_button = document.getElementById('submit');
+    refine_results_button.addEventListener('click', delete_html);
+    refine_results_button.addEventListener('click', get_movies_with_refine_filters);
 
+    // split URL and get search values sent from homepage
+    if (window.location.search.split('?')){
+        let url = window.location.search.split('?');
+        if (url[1].split('=')){
+            let values_url = url[1].split('=')
+        
+        let search_category = values_url[0]
+        let search_category_value = values_url[1];
+        const search_category_value_first_caps = search_category_value.charAt(0).toUpperCase() + search_category_value.slice(1)
+        let query_parameters = `${search_category}=${search_category_value_first_caps}`
 
-if (window.location.search.split('?')){
-    let url = window.location.search.split('?');
-    if (url[1].split('=')){
-        let values_url = url[1].split('=')
-    
-    let key_type = values_url[0]
-    let key_value = values_url[1];
-    const valueCapitalized = key_value.charAt(0).toUpperCase() + key_value.slice(1)
-    let query_parameters = `${key_type}=${valueCapitalized}`
-
-    if (values_url){
-        fetch_movies(query_parameters)
+        // if there are values in the url, fetch the movies that match that param 
+        if (values_url){
+            change_html_for_results_header(search_category, search_category_value_first_caps)
+            if (search_category == 'all') {
+                fetch_movies_all(search_category_value)
+            } else {
+                fetch_movies(query_parameters)
+            }
+            
+        }
+        }    
     }
+    const category_labels = get_category_labels()
 
+    for (label in category_labels) {    
+        if (["genres", "languages", "countries"].includes(category_labels[label])) {
+            fetch_dropdown_items(category_labels[label])
+        } 
     }
     
 }
 
-
-
-const dropdown_keys = get_dropdown_keys()
-
-for (key in dropdown_keys) {
-    console.log(key)
-    fetch_dropdown_items(dropdown_keys[key])
-    
-}
-
-    
-}
-
-function get_dropdown_keys() {
-    return ['genres', 'languages', 'countries']
-}
-
-function get_search_values() {
-    return ['title', 'rating', 'release_year', 'genres', 'languages', 'countries']
+function get_category_labels() {
+    return ['genres', 'languages', 'countries', 'title', 'years', 'rating']
 }
 
 function get_api_base_url(){
@@ -54,23 +51,7 @@ function get_api_base_url(){
     return baseURL;
 }
 
-
-function create_dropdown_options(item_id, item_list){
-    var item_select = document.getElementById(`${item_id}`);
-    var option_element = document.createElement("option");
-    option_element.text = 'All';
-    item_select.options.add(option_element);
-    count = 0;
-    for(item in item_list){
-        var option_element = document.createElement("option");
-        option_element.text = item_list[count];
-        count = count + 1
-        item_select.options.add(option_element);
-    }
-
-}
-
-
+// Fetch the options for "genres", "language", and "countries" from the api
 function fetch_dropdown_items(key) {
     var url = get_api_base_url() + `/${key}`;
 
@@ -87,10 +68,22 @@ function fetch_dropdown_items(key) {
     });
 }
 
+// Use the categories fetched from the api to populate the "genres", "language", and "countries" dropwdowns
+function create_dropdown_options(dropdown_label, fetched_dropdown_label_options){
+    var dropdown_element = document.getElementById(`${dropdown_label}`);
+    var option_element = document.createElement("option");
+    // this is the default value for all dropdowns
+    option_element.text = 'All';
+    dropdown_element.options.add(option_element);
+    for(option in fetched_dropdown_label_options){
+        var option_element = document.createElement("option");
+        option_element.text = fetched_dropdown_label_options[option];
+        dropdown_element.options.add(option_element);
+    }
+}
 
-function fetch_movies(endpoint_parameters) {
-    console.log(endpoint_parameters)
-    var url = get_api_base_url() + `/movies?${endpoint_parameters}`;
+function fetch_movies_all(endpoint_parameters) {
+    var url = get_api_base_url() + `/movies/all/${endpoint_parameters}`;
     console.log(url)
 
     fetch(url, {method: 'get'})
@@ -98,9 +91,7 @@ function fetch_movies(endpoint_parameters) {
     .then((response) => response.json())
 
     .then(function(movies) {
-        console.log(movies)
         for (let i = 0; i < 20; i++){
-            console.log(movies[i])
             create_html(movies[i].title, movies[i].rating, movies[i].release_year, movies[i].id, movies[i].poster_path)
         }
     })
@@ -110,45 +101,81 @@ function fetch_movies(endpoint_parameters) {
     });
 }
 
-// filters = ['genres']
-function get_movies(){
+// Fetches the movies that match the corresponding endpoint paramters for /movies and call create_html
+function fetch_movies(endpoint_parameters) {
+    var url = get_api_base_url() + `/movies?${endpoint_parameters}`;
+
+    fetch(url, {method: 'get'})
+
+    .then((response) => response.json())
+
+    .then(function(movies) {
+        for (let i = 0; i < 20; i++){
+            create_html(movies[i].title, movies[i].rating, movies[i].release_year, movies[i].id, movies[i].poster_path)
+        }
+    })
+
+    .catch(function(error) {
+        console.log(error);
+    });
+}
+
+
+// Get filters selected by user from refine results, create revised endpoint parameters, and call fetch_movies()
+function get_movies_with_refine_filters(){
     filters_list = get_filters()
-    dropdown_keys = get_dropdown_keys()
+    category_labels = get_category_labels()
     endpoint_parameters = ``
     for (let i = 0; i < filters_list.length; i++){
         filter = capitalize_first_letter(filters_list[i])
-        console.log(filter)
-        key = dropdown_keys[i]
-        if (filter != 'All'){
-            search_string = `${key}=${filter}&`
+        label = category_labels[i]
+        if (filter != 'All' && filter != ''){
+            search_string = `${label}=${filter}&`
             endpoint_parameters += search_string 
         }
         
     }
     endpoint_parameters = endpoint_parameters.substring(0, endpoint_parameters.length - 1);
     fetch_movies(endpoint_parameters)
+    change_html_for_results_header("", "")
+    
 }
+
 
 function capitalize_first_letter(string){
     string.charAt(0).toUpperCase() + string
     return string
 }
 
+// Gets value associated with each category in refine results and returns it as a list in the following order: 'genres', 'languages', 'countries', 'title', 'years', 'rating'
 function get_filters(){
     filters_list = []
 
-    dropdown_keys = get_dropdown_keys()
-    for (key in dropdown_keys){
-            dropdown_keys[key] = document.getElementById(`${dropdown_keys[key]}`).value;
-            filters_list.push(dropdown_keys[key])
+    category_labels = get_category_labels()
+    for (label in category_labels){
+        category_labels[label] = document.getElementById(`${category_labels[label]}`).value;
+            filters_list.push(category_labels[label])
         
     }
-   
     return filters_list
 
 }
 
 
+function change_html_for_results_header(key, input) {
+    var results = document.getElementById('results_title'); 
+    // Changing header after initial homepage user search 
+    if (key != '' && input != '') {
+        results.innerText = `Results for ${key}: "${input}"`
+    } 
+    // Changing the header after using refine results
+    else {
+        results.innerText = `Refined Results`
+    }
+    
+}
+
+// For one movie, create a card with the title, rating, release year, and the image (poster path) and add CSS properties
 function create_html(title, rating, release_year, id, poster_path){
     let main_content_div = document.getElementById('main-div');
     let card_div = document.createElement('div');
@@ -202,7 +229,7 @@ function create_html(title, rating, release_year, id, poster_path){
 
 }
 
-
+// Delete all current card movies (triggered after the user hits search button)
 function delete_html(){
     let myNode = document.getElementById('main-div');
     while (myNode.firstChild) {
