@@ -27,6 +27,13 @@ function initialize() {
         
     });
 
+    input.addEventListener('keypress', function (event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          set_url('all')
+        }
+    });
+
     search_all.addEventListener('click', function() {
         set_url('all')
     })

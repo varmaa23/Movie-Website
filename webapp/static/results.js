@@ -9,15 +9,17 @@ function initialize() {
     refine_results_button.addEventListener('click', delete_html);
     refine_results_button.addEventListener('click', get_movies_with_refine_filters);
 
+    let search_category = ''
+    let search_category_value_first_caps = ''
     // split URL and get search values sent from homepage
     if (window.location.search.split('?')){
         let url = window.location.search.split('?');
         if (url[1].split('=')){
             let values_url = url[1].split('=')
         
-        let search_category = values_url[0]
+        search_category = values_url[0]
         let search_category_value = values_url[1];
-        const search_category_value_first_caps = search_category_value.charAt(0).toUpperCase() + search_category_value.slice(1)
+        search_category_value_first_caps = search_category_value.charAt(0).toUpperCase() + search_category_value.slice(1)
         let query_parameters = `${search_category}=${search_category_value_first_caps}`
 
         // if there are values in the url, fetch the movies that match that param 
@@ -36,12 +38,19 @@ function initialize() {
 
     for (label in category_labels) {    
         if (["genres", "languages", "countries"].includes(category_labels[label])) {
-            fetch_dropdown_items(category_labels[label])
-        } 
-    }
-    
+            fetch_dropdown_items(category_labels[label], search_category, search_category_value_first_caps)
+        } else {
+            set_category_value_by_url(search_category, search_category_value_first_caps)
+        }
+    }  
 }
 
+
+function set_category_value_by_url(search_category, search_category_value_first_caps) {
+    var initialized_category = document.getElementById(`${search_category}`)
+    initialized_category.value = search_category_value_first_caps
+}
+ 
 function get_category_labels() {
     return ['genres', 'languages', 'countries', 'title', 'years', 'rating']
 }
@@ -52,20 +61,29 @@ function get_api_base_url(){
 }
 
 // Fetch the options for "genres", "language", and "countries" from the api
-function fetch_dropdown_items(key) {
+function fetch_dropdown_items(key, search_category, search_category_value) {
     var url = get_api_base_url() + `/${key}`;
-
+    let dropdown_list = []
     fetch(url, {method: 'get'})
 
     .then((response) => response.json())
 
+ 
     .then(function(items) {
+        dropdown_list = items
         create_dropdown_options(key, items)
+    })
+
+    .then(function() {
+        if (dropdown_list.includes(search_category_value)) {
+            set_category_value_by_url(search_category, search_category_value)
+        }
     })
 
     .catch(function(error) {
         console.log(error);
     });
+
 }
 
 // Use the categories fetched from the api to populate the "genres", "language", and "countries" dropwdowns
@@ -91,7 +109,15 @@ function fetch_movies_all(endpoint_parameters) {
     .then((response) => response.json())
 
     .then(function(movies) {
-        for (let i = 0; i < 20; i++){
+        num_results_displayed = 11
+        if (movies.length <= 10) {
+            num_results_displayed = movies.length
+        } 
+        // Make global variable timesCLicked that is the amount of times the loadmore button is clicked
+        // create the button and add an event listener that increments timesClicked -> load_more_Results()
+        // every time timesClicked is incremented, load_more_results i_Start += 10 IF the movies remaining >= 11
+        // load_more_results(0, movies)
+        for (let i = 0; i < num_results_displayed; i++){
             create_html(movies[i].title, movies[i].rating, movies[i].release_year, movies[i].id, movies[i].poster_path)
         }
     })
@@ -99,6 +125,18 @@ function fetch_movies_all(endpoint_parameters) {
     .catch(function(error) {
         console.log(error);
     });
+}
+
+
+function load_more_results(i_start, movies) {
+    num_results_displayed = 11
+    if (movies.length <= 10) {
+        num_results_displayed = movies.length
+    } 
+    for (let i = i_start; i < num_results_displayed; i++){
+        create_html(movies[i].title, movies[i].rating, movies[i].release_year, movies[i].id, movies[i].poster_path)
+
+    }
 }
 
 // Fetches the movies that match the corresponding endpoint paramters for /movies and call create_html
@@ -110,8 +148,13 @@ function fetch_movies(endpoint_parameters) {
     .then((response) => response.json())
 
     .then(function(movies) {
-        for (let i = 0; i < 20; i++){
-            create_html(movies[i].title, movies[i].rating, movies[i].release_year, movies[i].id, movies[i].poster_path)
+        if (movies[0]){
+            for (let i = 0; i < 20; i++){
+                create_html(movies[i].title, movies[i].rating, movies[i].release_year, movies[i].id, movies[i].poster_path)
+            }
+        } 
+        else{
+            create_html_no_results()
         }
     })
 
@@ -166,6 +209,7 @@ function change_html_for_results_header(key, input) {
     var results = document.getElementById('results_title'); 
     // Changing header after initial homepage user search 
     if (key != '' && input != '') {
+        input = input.replace(/%20/g, " ");
         results.innerText = `Results for ${key}: "${input}"`
     } 
     // Changing the header after using refine results
@@ -235,5 +279,18 @@ function delete_html(){
     while (myNode.firstChild) {
         myNode.removeChild(myNode.lastChild);
       }
+}
+
+// If there are no movies returned from the API call, display a helpful error message
+function create_html_no_results() {
+    let main_content_div = document.getElementById('main-div');
+    let message = document.createElement('p');
+    message.innerHTML = 'Sorry, it looks like there were no great matches for your search.<br><br> Try checking your spelling or searching for something else.';
+    message.classList.add('instructions')
+
+   
+    // message.appendChild(message_text)
+    main_content_div.appendChild(message);
+
 }
 
