@@ -228,4 +228,14 @@ align-items: center;}
 
 .refine-results{
     height: 90vh;
+    overflow-y: auto;
+}
+
+.results{
+    height: 90vh;
+    overflow-y: auto;
+}
+
+.more-results{
+    margin-bottom: 2rem;
 }

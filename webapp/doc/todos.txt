@@ -1,5 +1,5 @@
 1. If there's apostrophes in names of titles, double them!!!
 2. Implement Advanced Search
-3. Load more results into pages 
-4. Make Refine Results static
-5. helpful error message if there's no results 
+3. helpful error message if there's no results 
+4. SQL injection
+
