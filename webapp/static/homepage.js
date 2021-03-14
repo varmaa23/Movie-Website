@@ -22,8 +22,11 @@ function initialize() {
             'Production: ': company,
             'Year: ': year
         }
-        change_inner_text(event, header_html_dict)
-        
+        if (event.target.value) {
+            change_inner_text(event, header_html_dict, true)
+        } else {
+            change_inner_text(event, header_html_dict, false)
+        }
         
     });
 
@@ -59,10 +62,16 @@ function initialize() {
 }
 
 
-const change_inner_text = (event, header_html_dict) => {
+const change_inner_text = (event, header_html_dict, isValue) => {
     for (let [key, value] of Object.entries(header_html_dict)) {
-        value.classList.add('show')
-        value.innerHTML = `${key}` +  event.target.value
+        if (isValue){
+            value.classList.add('show')
+            value.innerHTML = `${key}` +  event.target.value
+        } else {
+            value.classList.remove("show");
+            value.classList.add('home-dropdown')
+        }
+        
     }
 }
 

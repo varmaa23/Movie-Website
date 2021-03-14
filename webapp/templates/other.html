@@ -5,11 +5,12 @@
             <link rel="stylesheet" type="text/css" href="../static/webapp.css">
             <script type="text/javascript" src="../static/homepage.js"></script>
         </head>
-        <body>
+        <body class="background">
             <div class="primarycolor space_between nav">
                 <a href="other.html">
                     <div class="extra_margin_left">
-                        <h1>LOGO</h1>
+                        <img class="logo" src="{{url_for('static', filename='logo.png')}}" />
+                        <img class="page-title"src="{{url_for('static', filename='movie_time.png')}}" />
                     </div>
                 </a>
                 <a class="extra_margin_right advanced_search" href="advanced_search.html">
@@ -17,8 +18,9 @@
                 </a>
 
             </div>
-
+            <div class="">
             <div class="center vh60 search-container-hp">
+               
                 <div class="primarycolor border">
                     <div class="extra-padding">
                     <h4 class="search_title">
@@ -45,6 +47,8 @@
                 </div>
                 </div>
             </div>
+            <div class=""></div>
+        </div>
 
         </body>
     </html>

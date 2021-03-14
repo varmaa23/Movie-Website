@@ -1,8 +1,5 @@
-1. If there's apostrophes in names of titles, double them!!!
 2. Implement Advanced Search
 3. Comments
 4. SQL Injection
 5. Search Button
-6. incorporate all into movies endpoint
-7. Change default movie picture 
-8. LOGO
+7. Restyle default movies picture

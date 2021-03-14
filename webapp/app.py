@@ -44,6 +44,8 @@ def advanced_search():
 # def movies_page():
 #     return flask.render_template('other.html')
 
+
+
 # This route supports relative links among your web pages, assuming those pages
 # are stored in the templates/ directory or one of its descendant directories,
 # without requiring you to have specific routes for each page.
