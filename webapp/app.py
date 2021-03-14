@@ -36,6 +36,10 @@ def results():
 def movie():
     return flask.render_template('movie.html')
 
+@app.route('/advanced')
+def advanced_search():
+    return flask.render_template('advanced_search.html')
+
 # @app.route('/movie/<movie_id>')
 # def movies_page():
 #     return flask.render_template('other.html')

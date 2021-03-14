@@ -3,26 +3,24 @@
         <head>
             <title>Movies</title>
             <link rel="stylesheet" type="text/css" href="../static/webapp.css">
-            <script type="text/javascript" src="../static/results.js"></script>
+            <script type="text/javascript" src="../static/advanced_search.js"></script>
         </head>
         <body>
             <div class="primarycolor space_between nav">
                 <a href="other.html">
-                    <div class="extra_margin_left">
-                        <h1>LOGO</h1>
-                    </div>
-                </a>
-                <a class="extra_margin_right advanced_search" href="advanced_search.html">
+                <div class="extra_margin_left">
+                    <h1>LOGO</h1>
+                </div>
+            </a>
+            <a class="extra_margin_right advanced_search" href="advanced_search.html">
                     Advanced Search
                 </a>
 
             </div>
+            <div class="advanced-header">
+                <h1>Advanced Search</h1>
+            </div>
 
-            <div class="results-main-div">
-                <div class="secondary-color refine-results">
-
-
-                    <h2 class="title-margin-left">Refine Results</h2>
                     <div class="justify-center">
                     <form class="w-80">
 
@@ -33,15 +31,23 @@
                                   <input class="input" id="title" autocomplete="off"></input</div>
                             
                         </div>
+
                         <div class="column-justify">
-                        <label>
-                            Genre
-                        </label>
-                            <select name="Genre" id="genres" class="input">
+                            <label>
+                                Genre
+                            </label> 
+                            <select name="input" id="genres" class="input">
                             
                               </select>
-                        
-                    </div>
+                        </div>
+
+                        <div class="column-justify">
+                            <label>
+                                Production Company
+                            </label>
+                                  <input class="input" id="company" autocomplete="off"></input</div>
+                            
+                        </div>
 
                     <div class="column-justify">
                         <label>
@@ -74,7 +80,7 @@
 
                     <div class="column-justify">
                         <label>
-                            Country
+                            Production Country
                         </label>
                             <select name="Countries" id="countries" class="input">
                                 
@@ -85,32 +91,30 @@
                         <label>
                             Release year
                         </label>
-                        <input class="input" id="years" autocomplete="off"></input</div>
+                        <input class="input" id="years" autocomplete="off" placeholder="Start"></input</div><input class="input" id="years" autocomplete="off" placeholder="End"></input</div>
                         
                     </div>
-                    </form>
-                    
-                </div>
+
+                    <div class="column-justify">
+                        <label>
+                            Revenue
+                        </label>
+                        <input class="input" id="revenue" autocomplete="off" placeholder="From"></input</div><input class="input" id="years" autocomplete="off" placeholder="To"></input</div>
+                        
+                    </div>
+
+                    <div class="column-justify">
+                        <label>
+                            Budget
+                        </label>
+                        <input class="input" id="budget" autocomplete="off" placeholder="From"></input</div><input class="input" id="years" autocomplete="off" placeholder="To"></input</div>
+                        
+                    </div>
+
                 <div class="center">
                     <button id="submit">Search</button>
                 </div>
-                
-                </div>
-
-
-                <div class="results" id="results">
-
-                    <h2  id='results_title' style="text-align: center;">Results</h2>
-
-                    <div id="main-div">
-
-                    </div>
             
-                    
-             
-                </div>
-                
-            </div>
-
+            </form>
         </body>
     </html>

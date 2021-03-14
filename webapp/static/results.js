@@ -12,37 +12,62 @@ function initialize() {
     
     // split URL and get search values sent from homepage
     if (window.location.search.split('?')){
-        let search_category = get_search_category()
-        let search_category_value_first_caps = get_search_category_value()
-        let query_parameters = get_query_parameters()
-
-            change_html_for_results_header(search_category, search_category_value_first_caps)
-            if (search_category == 'all') {
-                fetch_movies(search_category_value_first_caps, 'all')
-            } else {
-                fetch_movies(query_parameters, 'movies')
-            }
-            
-    const category_labels = get_category_labels()
-
-    for (label in category_labels) {    
-        if (["genres", "languages", "countries"].includes(category_labels[label])) {
-            fetch_dropdown_items(category_labels[label], search_category, search_category_value_first_caps)
+        // search category could either be the query parameters (if they're coming straight from advanced search)
+        // or from the home page (a single parameter)
+        let search_category = get_search_categories()
+        let query_parameters = ''
+        let search_category_value_first_caps = ''
+        if (search_category.includes('&')) {
+            query_parameters = search_category
         } else {
-            set_category_value_by_url(search_category, search_category_value_first_caps)
+            search_category_value_first_caps = get_search_category_value()
+            query_parameters = get_query_parameters()
         }
-    }  
-}}
+        
+
+        change_html_for_results_header(search_category, search_category_value_first_caps)
+        if (search_category == 'all') {
+            fetch_movies(search_category_value_first_caps, 'all')
+        } else {
+            fetch_movies(query_parameters, 'movies')
+        }
+            
+        const category_labels = get_category_labels()
+
+        for (label in category_labels) {    
+            if (["genres", "languages", "countries"].includes(category_labels[label])) {
+                fetch_dropdown_items(category_labels[label], search_category, search_category_value_first_caps)
+            } else {
+                set_category_value_by_url(search_category, search_category_value_first_caps)
+            }
+        }  
+    }
+}
 
 function get_search_category(){
         let url = window.location.search.split('?');
         if (url[1].split('=')){
             let values_url = url[1].split('=')
         search_category = values_url[0]
-    return search_category
+        return search_category
 
-} 
+        } 
 
+}
+
+function get_search_categories() {
+    let url = window.location.search.split('?');
+    if(!url[1].includes('&')) {
+        url = window.location.search.split('?');
+        if (url[1].split('=')){
+            let values_url = url[1].split('=')
+                search_category = values_url[0]
+            return search_category
+
+        }
+    } else {
+        return url[1]
+    }
 }
 
 function get_search_category_value(){
@@ -50,9 +75,11 @@ function get_search_category_value(){
         let url = window.location.search.split('?');
         if (url[1].split('=')){
             let values_url = url[1].split('=')
-        let search_category_value = values_url[1];
-        search_category_value_first_caps = search_category_value.charAt(0).toUpperCase() + search_category_value.slice(1)
-        return search_category_value_first_caps}
+            let search_category_value = values_url[1];
+            search_category_value_first_caps = search_category_value.charAt(0).toUpperCase() + search_category_value.slice(1)
+            
+            return search_category_value_first_caps
+        }
 }
 
 //Get query parameters from the URL

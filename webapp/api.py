@@ -15,7 +15,7 @@ from config import password
 from config import database
 from config import user
 
-from create_queries import create_movie_table_query, create_genres_table_query, create_search_all_query
+from create_queries import create_movie_table_query, create_genres_table_query, create_search_all_query, create_genre_query
 
 def connect_database():
     try:
