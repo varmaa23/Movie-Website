@@ -19,12 +19,12 @@ app.register_blueprint(api.api, url_prefix='/api')
 # This route delivers the user your site's home page.
 @app.route('/')
 def home():
-    return flask.render_template('other.html')
+    return flask.render_template('home.html')
 
 
 @app.route('/home')
 def test():
-    return flask.render_template('other.html')
+    return flask.render_template('home.html')
 
 
 @app.route('/results')
@@ -42,7 +42,7 @@ def advanced_search():
 
 # @app.route('/movie/<movie_id>')
 # def movies_page():
-#     return flask.render_template('other.html')
+#     return flask.render_template('home.html')
 
 
 

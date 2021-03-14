@@ -269,3 +269,7 @@ align-items: center;}
     height: 1;
     height: 310px;
 }
+
+.select {
+    background-color: #C4C4C4;
+}
