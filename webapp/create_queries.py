@@ -11,6 +11,8 @@ def create_movie_table_query(items_dictionary):
             else:
                 if item == 'rating':
                     query_dictionary[item] = ">= '{}'".format(items_dictionary[item])
+                # elif item == 'budget':
+                #     query_dictionary[item] = ">= '{}'".format(items_dictionary[item])
                 else:
                     query_dictionary[item] = "= '{}'".format(items_dictionary[item])
         else:
@@ -99,3 +101,21 @@ def create_search_all_query(search_string):
         
     print(query_skeleton)
     return query_skeleton
+
+
+def create_genre_query(keyword):
+    genre_query = ''' 
+    SELECT 
+    movies.id, movies.title, movies.release_year, movies.rating, movies.poster_path
+    FROM 
+    movies,
+    genres,
+    movie_genres
+    WHERE
+    genres.genre LIKE '%{}%'
+    AND
+    movies.id = movie_genres.movie_id
+    AND
+    movie_genres.genre_id = genres.id
+    '''.format(keyword)
+    return genre_query

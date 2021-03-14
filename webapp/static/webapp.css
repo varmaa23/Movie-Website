@@ -239,3 +239,15 @@ align-items: center;}
 .more-results{
     margin-bottom: 2rem;
 }
+
+.advanced_search{
+    color: #045550;
+}
+
+.advanced_search:hover {
+    color: white;
+}
+
+.advanced-header {
+    text-align: center;
+}
