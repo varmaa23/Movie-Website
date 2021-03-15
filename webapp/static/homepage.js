@@ -30,6 +30,7 @@ function initialize() {
         dropdown_list[dropdown_list_index].classList.add('select')
     })
 
+    // For the enter keypress event 
     input.addEventListener('keypress', function (event) {
         console.log(input.value)
         if (event.keyCode === 13 && input.value) {

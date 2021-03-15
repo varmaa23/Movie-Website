@@ -22,7 +22,6 @@ function initialize() {
         } else {
             search_category_value_first_caps = get_search_category_value()
             query_parameters = get_query_parameters()
-            print(query_parameters)
         }
         
 
@@ -78,8 +77,12 @@ function get_search_category_value(){
             let values_url = url[1].split('=')
             let search_category_value = values_url[1];
             // If there's an apostrophe in the title, double it so SQL knows that the apostrophe is part of the string
-            search_category_value_first_caps = search_category_value.charAt(0).toUpperCase() + search_category_value.slice(1).replace(/%27/g, "''")
-            
+            let search_category_value_first_caps = ''
+            search_category_value_list = search_category_value.replace(/%20/g, " ").split(" ")
+            search_category_value_list.forEach((value) => {
+                value = value.charAt(0).toUpperCase() + value.slice(1).replace(/%27/g, "''")
+                search_category_value_first_caps += value + " "
+            })
             return search_category_value_first_caps
         }
 }
@@ -96,7 +99,13 @@ function get_query_parameters(){
 
 function set_category_value_by_url(search_category, search_category_value_first_caps) {
     var initialized_category = document.getElementById(`${search_category}`)
-    initialized_category.value = search_category_value_first_caps
+    let value_string = ''
+    search_category_value_list = search_category_value_first_caps.replace(/%20/g, " ").split(" ")
+    search_category_value_list.forEach((value) => {
+        value = value.charAt(0).toUpperCase() + value.slice(1).replace(/%27/g, "''")
+        value_string += value + " "
+    })
+    initialized_category.value = value_string
 }
  
 function get_category_labels() {
@@ -257,6 +266,8 @@ function get_movies_with_refine_filters(){
         
     }
     endpoint_parameters = endpoint_parameters.substring(0, endpoint_parameters.length - 1);
+    url = `${protocol}//${hostname}:${port}/results?${endpoint_parameters}`
+    window.location.href = url
     fetch_movies(endpoint_parameters, 'movies')
     change_html_for_results_header("", "")
     
@@ -317,7 +328,10 @@ function create_html(title, rating, release_year, id, poster_path){
  
 
     image.src = `https://image.tmdb.org/t/p/w185${poster_path}`
-    is_in_IBMD_server(image, poster_path)
+    console.log(`https://image.tmdb.org/t/p/w185${poster_path}`)
+    image.onerror = function(){
+        image.src = '../static/null_movie.png'
+    };
       
 
     let main_info = document.createElement('div');
@@ -340,7 +354,8 @@ function create_html(title, rating, release_year, id, poster_path){
     port = window.location.port
     url = `${protocol}//${hostname}:${port}/movie?id=${id}`
     let movie_more = document.createElement('a');
-    let more_text = document.createTextNode('View more');
+    movie_more.classList.add('view-more')
+    let more_text = document.createTextNode('view more');
     movie_more.href = url
     movie_more.appendChild(more_text)
     main_info.appendChild(movie_more);
@@ -361,23 +376,6 @@ function create_html(title, rating, release_year, id, poster_path){
 
 }
 
-function is_in_IBMD_server(image, poster_path){
-    url = `https://image.tmdb.org/t/p/w185/${poster_path}.jpg`
-    fetch(url, {method: 'get'})
-    .then(function(response) { 
-        if(response.status == 200){
-            return true;
-        }
-    }
-        )
-    .catch(function(error) {
-        console.log(error);
-        return false
-    });
-
-    // console.log(image.src = `https://image.tmdb.org/t/p/w185${poster_path}`)
-
-}
 // Delete all current card movies (triggered after the user hits search button)
 function delete_html(){
     // Reset results_to_display to start a fresh search and ensure load_results works properly 

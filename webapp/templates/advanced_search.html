@@ -7,7 +7,7 @@
         </head>
         <body>
             <div class="primarycolor space_between nav">
-                <a href="home.html">
+                <a class = "logo-link" href="home.html">
                 <div class="extra_margin_left">
                     <img class="logo" src="{{url_for('static', filename='logo.png')}}" />
                     <img class="page-title"src="{{url_for('static', filename='movie_time.png')}}" />
@@ -92,7 +92,7 @@
                         <label>
                             Release year
                         </label>
-                        <input class="input" id="years" autocomplete="off" placeholder="Start"></input</div><input class="input" id="years" autocomplete="off" placeholder="End"></input</div>
+                        <input class="input" id="years" autocomplete="off" placeholder="Movies released after ..."></input</div>
                         
                     </div>
 
@@ -100,7 +100,7 @@
                         <label>
                             Revenue
                         </label>
-                        <input class="input" id="revenue" autocomplete="off" placeholder="From"></input</div><input class="input" id="years" autocomplete="off" placeholder="To"></input</div>
+                        <input class="input" id="revenue" autocomplete="off" placeholder="Movies with revenue greater than ..."></input</div>
                         
                     </div>
 
@@ -108,7 +108,15 @@
                         <label>
                             Budget
                         </label>
-                        <input class="input" id="budget" autocomplete="off" placeholder="From"></input</div><input class="input" id="years" autocomplete="off" placeholder="To"></input</div>
+                        <input class="input" id="budget" autocomplete="off" placeholder="Movies with budget greater than ..."></input</div>
+                        
+                    </div>
+
+                    <div class="column-justify">
+                        <label>
+                            Runtime
+                        </label>
+                        <input class="input" id="runtime" autocomplete="off" placeholder="Movies with runtime less than ..."></input</div>
                         
                     </div>
 

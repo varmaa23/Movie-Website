@@ -23,7 +23,7 @@ function initialize() {
 }
 
 function get_category_labels() {
-    return ['genres', 'languages', 'countries', 'title', 'rating']
+    return ['genres', 'languages', 'countries', 'title', 'rating', 'revenue', 'budget', 'runtime', 'years']
 }
 
 function get_api_base_url(){
