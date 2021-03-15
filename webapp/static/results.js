@@ -6,6 +6,7 @@ function initialize() {
 
     var refine_results_button = document.getElementById('submit');
     refine_results_button.addEventListener('click', delete_html);
+    console.log("hello")
     refine_results_button.addEventListener('click', get_movies_with_refine_filters);
 
     
@@ -35,7 +36,7 @@ function initialize() {
 
         for (label in category_labels) {    
             if (["genres", "languages", "countries"].includes(category_labels[label])) {
-                fetch_dropdown_items(category_labels[label], search_category, search_category_value_first_caps)
+                fetch_dropdown_items(category_labels[label], search_category, search_category_value_first_caps.replace(" ", ""))
             } else {
                 set_category_value_by_url(search_category, search_category_value_first_caps)
             }
@@ -68,9 +69,10 @@ function get_search_category_value(){
             let search_category_value = values_url[1];
             // If there's an apostrophe in the title, double it so SQL knows that the apostrophe is part of the string
             let search_category_value_first_caps = ''
-            search_category_value_list = search_category_value.replace(/%20/g, " ").split(" ")
+            // search_category_value_list = search_category_value.replace(/%20/g, " ").split(" ")
+            search_category_value_list = decodeURIComponent(search_category_value).split(" ")
             search_category_value_list.forEach((value) => {
-                value = value.charAt(0).toUpperCase() + value.slice(1).replace(/%27/g, "''")
+                value = value.charAt(0).toUpperCase() + value.slice(1).replace("'", "''")
                 search_category_value_first_caps += value + " "
             })
             return search_category_value_first_caps
@@ -91,12 +93,14 @@ function get_query_parameters(){
 function set_category_value_by_url(search_category, search_category_value_first_caps) {
     var initialized_category = document.getElementById(`${search_category}`)
     let value_string = ''
-    search_category_value_list = search_category_value_first_caps.replace(/%20/g, " ").split(" ")
+    search_category_value_list = decodeURIComponent(search_category_value_first_caps).split(" ")
     search_category_value_list.forEach((value) => {
-        value = value.charAt(0).toUpperCase() + value.slice(1).replace(/%27/g, "''")
+        value = value.charAt(0).toUpperCase() + value.slice(1).replace("''", "'")
         value_string += value + " "
     })
-    initialized_category.value = value_string
+    console.log(search_category, value_string)
+    initialized_category.value = value_string.trim()
+    console.log(initialized_category.value)
 }
  
 function get_category_labels() {
@@ -256,6 +260,9 @@ function get_movies_with_refine_filters(){
         
     }
     endpoint_parameters = endpoint_parameters.substring(0, endpoint_parameters.length - 1);
+    protocol = window.location.protocol
+    hostname = window.location.hostname
+    port = window.location.port
     url = `${protocol}//${hostname}:${port}/results?${endpoint_parameters}`
     window.location.href = url
     fetch_movies(endpoint_parameters, 'movies')
@@ -289,7 +296,7 @@ function change_html_for_results_header(key, input) {
     var results = document.getElementById('results_title'); 
     // Changing header after initial homepage user search 
     if (key != '' && input != '') {
-        input = input.replace(/%20/g, " ");
+        input = decodeURIComponent(input)
         // Replace double apostrophes used for the search query
         input = input.replace("''", "'");
         results.innerText = `Results for ${key}: "${input}"`
@@ -314,7 +321,7 @@ function create_html(title, rating, release_year, id, poster_path){
  
 
     image.src = `https://image.tmdb.org/t/p/w185${poster_path}`
-    image.onerror = function(){
+    image.onerror = function() {
         image.src = '../static/null_movie.png'
     };
       
