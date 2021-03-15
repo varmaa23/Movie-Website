@@ -22,6 +22,7 @@ function initialize() {
         } else {
             search_category_value_first_caps = get_search_category_value()
             query_parameters = get_query_parameters()
+            print(query_parameters)
         }
         
 
@@ -76,7 +77,8 @@ function get_search_category_value(){
         if (url[1].split('=')){
             let values_url = url[1].split('=')
             let search_category_value = values_url[1];
-            search_category_value_first_caps = search_category_value.charAt(0).toUpperCase() + search_category_value.slice(1)
+            // If there's an apostrophe in the title, double it so SQL knows that the apostrophe is part of the string
+            search_category_value_first_caps = search_category_value.charAt(0).toUpperCase() + search_category_value.slice(1).replace(/%27/g, "''")
             
             return search_category_value_first_caps
         }
@@ -291,6 +293,8 @@ function change_html_for_results_header(key, input) {
     // Changing header after initial homepage user search 
     if (key != '' && input != '') {
         input = input.replace(/%20/g, " ");
+        // Replace double apostrophes used for the search query
+        input = input.replace("''", "'");
         results.innerText = `Results for ${key}: "${input}"`
     } 
     // Changing the header after using refine results

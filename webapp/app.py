@@ -19,12 +19,12 @@ app.register_blueprint(api.api, url_prefix='/api')
 # This route delivers the user your site's home page.
 @app.route('/')
 def home():
-    return flask.render_template('other.html')
+    return flask.render_template('home.html')
 
 
 @app.route('/home')
 def test():
-    return flask.render_template('other.html')
+    return flask.render_template('home.html')
 
 
 @app.route('/results')
@@ -40,9 +40,9 @@ def movie():
 def advanced_search():
     return flask.render_template('advanced_search.html')
 
-# @app.route('/movie/<movie_id>')
-# def movies_page():
-#     return flask.render_template('other.html')
+@app.errorhandler(404)  
+def not_found(e): 
+  return flask.render_template("error.html") 
 
 # This route supports relative links among your web pages, assuming those pages
 # are stored in the templates/ directory or one of its descendant directories,
