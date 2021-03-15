@@ -257,10 +257,6 @@ align-items: center;}
     text-align: center;
 }
 
-<<<<<<< HEAD
-.w-45{
-    width: 45%;
-=======
 
 .logo {
     height: 14vh;
@@ -284,5 +280,5 @@ align-items: center;}
 
 .error-header {
     text-align: center;
->>>>>>> 535dfd3c694f7e341fa8b13a5eeb52a016435c5b
 }
+

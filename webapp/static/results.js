@@ -362,20 +362,20 @@ function create_html(title, rating, release_year, id, poster_path){
 }
 
 function is_in_IBMD_server(image, poster_path){
-    // url = `https://image.tmdb.org/t/p/w185/${poster_path}.jpg`
-    // fetch(url, {method: 'get'})
-    // .then(function(response) { 
-    //     if(response.status == 200){
-    //         return true;
-    //     }
-    // }
-    //     )
-    // .catch(function(error) {
-    //     console.log(error);
-    //     return false
-    // });
+    url = `https://image.tmdb.org/t/p/w185/${poster_path}.jpg`
+    fetch(url, {method: 'get'})
+    .then(function(response) { 
+        if(response.status == 200){
+            return true;
+        }
+    }
+        )
+    .catch(function(error) {
+        console.log(error);
+        return false
+    });
 
-    console.log(image.src = `https://image.tmdb.org/t/p/w185${poster_path}`)
+    // console.log(image.src = `https://image.tmdb.org/t/p/w185${poster_path}`)
 
 }
 // Delete all current card movies (triggered after the user hits search button)
