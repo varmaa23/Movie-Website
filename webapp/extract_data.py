@@ -1,4 +1,9 @@
-# Authors: Valentina Guerrero and Aishwarya Varma 
+'''
+    Authors:
+    Valentina Guerrero
+    Aishwarya Varma 
+'''
+
 import csv
 import json
 import re

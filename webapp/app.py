@@ -1,11 +1,7 @@
-#  Authors: Valentina Guerrero and Aishwarya Varma
 '''
-    webapp.py
-    Jeff Ondich
-    6 November 2020
-
-    A tiny Flask web application, including API, to be used
-    as a template for setting up your web app assignment.
+    Authors:
+    Valentina Guerrero
+    Aishwarya Varma 
 '''
 import sys
 import argparse

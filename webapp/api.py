@@ -236,7 +236,6 @@ def get_movies():
         'company': company,
         'genre': genre
     })
-    print(where_portion)
     
     query = '''SELECT DISTINCT
         movies.id, 

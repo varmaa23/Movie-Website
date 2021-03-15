@@ -1,5 +1,6 @@
 
 // Authors: Valentina Guerrero and Aishwarya Varma
+
 window.onload = initialize;
 
 function initialize() {
@@ -16,11 +17,15 @@ function initialize() {
 
     dropdown_list_index = 0
     dropdown_list[dropdown_list_index].classList.add('select')
+
+    // Down and up arrow functionality for the input bar
     input.addEventListener('keydown', (event) => {
         dropdown_list[dropdown_list_index].classList.remove('select')
+        // Down
         if (event.keyCode == 40) {
             dropdown_list_index = (dropdown_list_index + 1) % dropdown_list.length
         }
+        // Up
         else if (event.keyCode == 38) {
             if (dropdown_list_index - 1 < 0) {
                 dropdown_list_index = dropdown_list.length
@@ -30,9 +35,8 @@ function initialize() {
         dropdown_list[dropdown_list_index].classList.add('select')
     })
 
-    // For the enter keypress event 
+    // Enter key for input
     input.addEventListener('keypress', function (event) {
-        console.log(input.value)
         if (event.keyCode === 13 && input.value) {
           event.preventDefault();
           dropdown_list.forEach((dropdown) => {
@@ -43,6 +47,7 @@ function initialize() {
         }
     });
 
+    // Change the text inside the bar that appears under input for each category
     input.addEventListener('input', (event) => {
         
         header_html_dict = {
@@ -61,9 +66,9 @@ function initialize() {
         
     });
 
+    // Search Button takes whatever option is 'hovered' over and uses that to search
     button.addEventListener('click', (event) => {
         event.preventDefault()
-        console.log('hello')
         dropdown_list.forEach((dropdown) => {
             if (dropdown.classList.contains('select')) {
                 set_url(dropdown.id)
@@ -71,6 +76,7 @@ function initialize() {
         })
     })
 
+    // The following allows click functionality for each option as well:
     all.addEventListener('click', function() {
         set_url('all')
     })
@@ -110,7 +116,7 @@ const change_inner_text = (event, header_html_dict, isValue) => {
 }
 
 
-
+// Set url based on the values provided in input and load the results page accordingly
 function set_url (endpoint){
     let url_input =  input.value;
     protocol = window.location.protocol

@@ -2,12 +2,8 @@
 
 window.onload = initialize;
 
-// results_to_display = 0
 function initialize() {
 
-    // var refine_results_button = document.getElementById('submit');
-    // refine_results_button.addEventListener('click', delete_html);
-    // refine_results_button.addEventListener('click', get_movies_with_refine_filters);
     const category_labels = get_category_labels()
 
     for (label in category_labels) {    
@@ -17,7 +13,6 @@ function initialize() {
     }   
 
     var button = document.getElementById('submit');
-    console.log(button)
     button.addEventListener('click', get_movies_with_advanced_filters);
     
 }
@@ -49,6 +44,7 @@ function fetch_dropdown_items(key) {
 
 }
 
+// Get all the filters that were provided by the user 
 function get_filters(){
     filters_list = []
 
@@ -70,9 +66,11 @@ function create_dropdown_options(dropdown_label, fetched_dropdown_label_options)
     option_element.text = 'All';
     dropdown_element.options.add(option_element);
     for(option in fetched_dropdown_label_options){
-        var option_element = document.createElement("option");
-        option_element.text = fetched_dropdown_label_options[option];
-        dropdown_element.options.add(option_element);
+        if (!fetched_dropdown_label_options[option].includes('?')){
+            var option_element = document.createElement("option");
+            option_element.text = fetched_dropdown_label_options[option];
+            dropdown_element.options.add(option_element);
+        } 
     }
 }
 
@@ -98,13 +96,11 @@ function get_movies_with_advanced_filters(event){
         }
         
     }
-    endpoint_parameters = endpoint_parameters.substring(0, endpoint_parameters.length - 1);
-    console.log(endpoint_parameters)
+    endpoint_parameters = endpoint_parameters.substring(0, endpoint_parameters.length - 1)
 
     protocol = window.location.protocol
     hostname = window.location.hostname
     port = window.location.port
     url = `${protocol}//${hostname}:${port}/results?${endpoint_parameters}`
-    console.log(url)
     window.location.href = url
 }

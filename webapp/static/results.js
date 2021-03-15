@@ -1,6 +1,5 @@
 // Authors: Valentina Guerrero and Aishwarya Varma
 
-
 window.onload = initialize;
 results_to_display = 0
 function initialize() {
@@ -44,17 +43,7 @@ function initialize() {
     }
 }
 
-function get_search_category(){
-        let url = window.location.search.split('?');
-        if (url[1].split('=')){
-            let values_url = url[1].split('=')
-        search_category = values_url[0]
-        return search_category
-
-        } 
-
-}
-
+// Get the 'key' parts of the URL (category=value, get the category)
 function get_search_categories() {
     let url = window.location.search.split('?');
     if(!url[1].includes('&')) {
@@ -70,6 +59,7 @@ function get_search_categories() {
     }
 }
 
+// Get the 'value' parts of the URL (category=value, get the value)
 function get_search_category_value(){
    
         let url = window.location.search.split('?');
@@ -87,16 +77,17 @@ function get_search_category_value(){
         }
 }
 
-//Get query parameters from the URL
+// Get query parameters from the URL
 function get_query_parameters(){
     
-    search_category = get_search_category()
+    search_category = get_search_categories()
     search_category_value_first_caps = get_search_category_value()
     let query_parameters = `${search_category}=${search_category_value_first_caps}`
     return query_parameters
 
 }
 
+// In refine results, set the value = to what has been searched 
 function set_category_value_by_url(search_category, search_category_value_first_caps) {
     var initialized_category = document.getElementById(`${search_category}`)
     let value_string = ''
@@ -151,12 +142,13 @@ function create_dropdown_options(dropdown_label, fetched_dropdown_label_options)
     option_element.text = 'All';
     dropdown_element.options.add(option_element);
     for(option in fetched_dropdown_label_options){
-        var option_element = document.createElement("option");
-        option_element.text = fetched_dropdown_label_options[option];
-        dropdown_element.options.add(option_element);
+        if (!fetched_dropdown_label_options[option].includes('?')){
+            var option_element = document.createElement("option");
+            option_element.text = fetched_dropdown_label_options[option];
+            dropdown_element.options.add(option_element);
+        } 
     }
 }
-
 
 function create_load_more_button(endpoint){
     let main_content_div = document.getElementById('main-div');
@@ -228,8 +220,6 @@ function fetch_movies(endpoint_parameters, endpoint) {
         var url = get_api_base_url() + `/movies?${endpoint_parameters}`;
     }
 
-    console.log(url)
-
     fetch(url, {method: 'get'})
 
     .then((response) => response.json())
@@ -273,10 +263,6 @@ function get_movies_with_refine_filters(){
     
 }
 
-function set_url_with_updated_query(){
-
-}
-
 
 function capitalize_first_letter(string){
     string.charAt(0).toUpperCase() + string
@@ -298,7 +284,7 @@ function get_filters(){
 
 }
 
-
+// Change the HTML so that it accurately displays what the user has searched for 
 function change_html_for_results_header(key, input) {
     var results = document.getElementById('results_title'); 
     // Changing header after initial homepage user search 
@@ -308,7 +294,7 @@ function change_html_for_results_header(key, input) {
         input = input.replace("''", "'");
         results.innerText = `Results for ${key}: "${input}"`
     } 
-    // Changing the header after using refine results
+    // Changing the header after using refine results (if there's multiple query parameters)
     else {
         results.innerText = `Refined Results`
     }
@@ -328,7 +314,6 @@ function create_html(title, rating, release_year, id, poster_path){
  
 
     image.src = `https://image.tmdb.org/t/p/w185${poster_path}`
-    console.log(`https://image.tmdb.org/t/p/w185${poster_path}`)
     image.onerror = function(){
         image.src = '../static/null_movie.png'
     };
@@ -390,7 +375,6 @@ function delete_html(){
 function remove_load_more_button(){
     let main_content_div = document.getElementById('main-div');
     let load_more_button = document.getElementById('button-div');
-    console.log(load_more_button)
     main_content_div.removeChild(load_more_button)
 
 }

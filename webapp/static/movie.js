@@ -1,3 +1,5 @@
+// Authors: Aishwarya Varma and Valentina Guerrero
+
 window.onload = initialize;
 
 function initialize() {
@@ -13,6 +15,7 @@ var revenue = document.getElementById('revenue');
 var budget = document.getElementById('budget');
 var country = document.getElementById('country');
 var company = document.getElementById('company');
+var poster = document.getElementById('poster');
 
 
 
@@ -33,6 +36,7 @@ function get_api_base_url(){
     return baseURL;
 }
 
+// fetch movies according to URL from API
 function fetch_movies(id_value) {
     
     var url = get_api_base_url() + `/movie/${id_value}`;
@@ -42,7 +46,7 @@ function fetch_movies(id_value) {
     .then((response) => response.json())
 
     .then(function(movie) {
-       change_html(movie.title, movie.overview, movie.budget, movie.revenue, movie.rating, movie.runtime, movie.release_year, movie.genres, movie.languages, movie.companies, movie.countries)
+       change_html(movie.title, movie.overview, movie.budget, movie.revenue, movie.rating, movie.runtime, movie.release_year, movie.genres, movie.languages, movie.companies, movie.countries, movie.poster_path)
     })
 
     .catch(function(error) {
@@ -50,10 +54,12 @@ function fetch_movies(id_value) {
     });
 }
 
-
-function change_html(movie_title, movie_overview, movie_budget, movie_revenue, movie_rating, movie_runtime, movie_years, movie_genres, movie_languages, movie_companies, movie_countries){
+// Add HTML attributes to the specific movie we've clicked on 
+function change_html(movie_title, movie_overview, movie_budget, movie_revenue, movie_rating, movie_runtime, movie_years, movie_genres, movie_languages, movie_companies, movie_countries, movie_poster_path){
     title.innerText = movie_title
     storyline.innerText = movie_overview
+
+    // these if statements are to handle 'unhelpful' data in the dataset (change runtime of 0 to NULL)
     if (movie_revenue == 0) {
         movie_revenue = ' NULL'
     }
@@ -75,4 +81,11 @@ function change_html(movie_title, movie_overview, movie_budget, movie_revenue, m
     languages.innerText = movie_languages
     companies.innerText = movie_companies
     countries.innerText = movie_countries
+    poster.src = `https://image.tmdb.org/t/p/w185${movie_poster_path}`
+    
+    // default dummy pic if there's no poster path
+    poster.onerror = function(){
+        poster.src = '../static/null_movie.png'
+    };
+      
 }

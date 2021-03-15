@@ -1,4 +1,5 @@
 // Authors: Valentina Guerrero and Aishwarya Varma
+
 window.onload = initialize;
 
 function initialize() {

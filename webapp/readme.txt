@@ -2,19 +2,14 @@ AUTHORS: Aishwarya Varma and Valentina Guerrero
 
 DATA: A dataset that contains information (title, overview, revenue, release year) of thousands of movies. 
 
-FEATURES CURRENTLY WORKING:
-- Home Page -- search bar for genres on homepage (test valid genres such as family, romance, horror)
-- Display Results -- is functional
-- Display Results -- Dropdown bars for Genre, Language, and Country correctly filter data
-- LOGO -- goes to homepage
-- Display Results -- "View more" allows you to view an individual movie
-- View More -- Can see rating, release year, runtime, overview, budget, and revenue
+Link: https://www.kaggle.com/rounakbanik/the-movies-dataset/
+License: CC0: Public Domain
+In order to view the dataset, click the link and download movies_metadata.csv.
+This dataset contains information about a list of around 45,000 movies, including information about their genre, production companies, revenue, languages, spoken languages, release dates, ratings, movie posters, and a synopsis. 
 
-FEATURES NOT YET WORKING:
-- Advanced Search
-- Home Page -- Searches for languages and production company
-- Display Results -- Make sure that api endpoints are capitalized after the search bar clicks enter
-- Home Page -- Search button doesn't really do anything
-- Display Results -- Refine Results for Title (should be input), Rating, and Release Year aren't implemented
-- View More (1 movie) -- Need to implement genres and languages
-- Display Results -- When user directly manipulates url (empty after results), dropdown menus don't work
+What works:
+- Home Page allows you to filter through title, genre, production company, country, languages, and release year fields to find a particular movie. You can also search all of these fields using the 'All' option.
+- Results Page filters through list of movies correctly.
+- Use Refine Results Page also properly filters through results.
+- Advanced Search correctly allows you to filter through all the fields (title, genre, production company, languages, country, runtime, budget, revenue, and release year)
+- When you click 'view more', you can see the individual fields for a movie.
