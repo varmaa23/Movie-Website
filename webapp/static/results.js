@@ -1,12 +1,10 @@
-// Authors: Valentina Guerrero and Aishwarya Varma
-
 window.onload = initialize;
 results_to_display = 0
 function initialize() {
 
     var refine_results_button = document.getElementById('submit');
     refine_results_button.addEventListener('click', delete_html);
-    console.log("hello")
+
     refine_results_button.addEventListener('click', get_movies_with_refine_filters);
 
     
@@ -98,9 +96,9 @@ function set_category_value_by_url(search_category, search_category_value_first_
         value = value.charAt(0).toUpperCase() + value.slice(1).replace("''", "'")
         value_string += value + " "
     })
-    console.log(search_category, value_string)
+    
     initialized_category.value = value_string.trim()
-    console.log(initialized_category.value)
+    
 }
  
 function get_category_labels() {
@@ -224,6 +222,7 @@ function fetch_movies(endpoint_parameters, endpoint) {
         var url = get_api_base_url() + `/movies?${endpoint_parameters}`;
     }
 
+
     fetch(url, {method: 'get'})
 
     .then((response) => response.json())
@@ -260,13 +259,29 @@ function get_movies_with_refine_filters(){
         
     }
     endpoint_parameters = endpoint_parameters.substring(0, endpoint_parameters.length - 1);
-    protocol = window.location.protocol
-    hostname = window.location.hostname
-    port = window.location.port
-    url = `${protocol}//${hostname}:${port}/results?${endpoint_parameters}`
-    window.location.href = url
+    
     fetch_movies(endpoint_parameters, 'movies')
     change_html_for_results_header("", "")
+   
+}
+
+function get_movies_with_refine_filters_test(){
+    
+    filters_list = get_filters()
+    category_labels = get_category_labels()
+    endpoint_parameters = ``
+    for (let i = 0; i < filters_list.length; i++){
+        filter = capitalize_first_letter(filters_list[i])
+        label = category_labels[i]
+        if (filter != 'All' && filter != ''){
+            search_string = `${label}=${filter}&`
+            endpoint_parameters += search_string 
+        }
+        
+    }
+    endpoint_parameters = endpoint_parameters.substring(0, endpoint_parameters.length - 1);
+
+    return endpoint_parameters
     
 }
 
@@ -346,9 +361,11 @@ function create_html(title, rating, release_year, id, poster_path){
     port = window.location.port
     url = `${protocol}//${hostname}:${port}/movie?id=${id}`
     let movie_more = document.createElement('a');
+    
+    movie_more.href = url
     movie_more.classList.add('view-more')
     let more_text = document.createTextNode('view more');
-    movie_more.href = url
+    
     movie_more.appendChild(more_text)
     main_info.appendChild(movie_more);
 
@@ -395,5 +412,4 @@ function create_html_no_results() {
     main_content_div.appendChild(message);
 
 }
-
 
