@@ -3,3 +3,4 @@
 4. SQL Injection
 5. Search Button
 7. Restyle default movies picture
+8. Error 404 page

@@ -60,6 +60,16 @@ function initialize() {
         
     });
 
+    button.addEventListener('click', (event) => {
+        event.preventDefault()
+        console.log('hello')
+        dropdown_list.forEach((dropdown) => {
+            if (dropdown.classList.contains('select')) {
+                set_url(dropdown.id)
+            }
+        })
+    })
+
     all.addEventListener('click', function() {
         set_url('all')
     })

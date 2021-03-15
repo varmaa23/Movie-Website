@@ -48,6 +48,10 @@ button {
     border-radius: 4px;
 }
 
+button:hover {
+    background-color: white;
+    color: #045550;
+}
 
 #content-div{
     width: 60%;
@@ -272,4 +276,8 @@ align-items: center;}
 
 .select {
     background-color: #C4C4C4;
+}
+
+.error-header {
+    text-align: center;
 }
