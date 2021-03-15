@@ -25,84 +25,6 @@ def connect_database():
         print(e)
         exit()
     
-@api.route('movies/all/<keyword>') 
-def search_all(keyword):
-    movies =[]
-
-    where_portion = create_search_all_query(keyword)
-    query = '''SELECT id, title, release_year, rating, poster_path FROM movies WHERE {};'''.format(where_portion)
-    
-    genre_query = ''' 
-    SELECT 
-    movies.id, movies.title, movies.release_year, movies.rating, movies.poster_path
-    FROM 
-    movies,
-    genres,
-    movie_genres
-    WHERE
-    genres.genre LIKE '%{}%'
-    AND
-    movies.id = movie_genres.movie_id
-    AND
-    movie_genres.genre_id = genres.id
-    '''.format(keyword)
-
-    language_query = ''' 
-    SELECT 
-    movies.id, movies.title, movies.release_year, movies.rating, movies.poster_path
-    FROM 
-    movies,
-    languages,
-    movie_langs
-    WHERE
-    languages.lang_full LIKE '%{}%'
-    AND
-    movies.id = movie_langs.movie_id
-    AND
-    movie_langs.lang_id = languages.id
-    '''.format(keyword)
-
-    countries_query = ''' 
-    SELECT 
-    movies.id, movies.title, movies.release_year, movies.rating, movies.poster_path
-    FROM 
-    movies,
-    countries,
-    movie_countries
-    WHERE
-    countries.country_name LIKE '%{}%'
-    AND
-    movies.id = movie_countries.movie_id
-    AND
-    movie_countries.country_id = countries.id
-    '''.format(keyword)
-
-    companies_query = ''' 
-    SELECT 
-    movies.id, movies.title, movies.release_year, movies.rating, movies.poster_path
-    FROM 
-    movies,
-    companies,
-    movie_companies
-    WHERE
-    companies.company_name LIKE '%{}%'
-    AND
-    movies.id = movie_companies.movie_id
-    AND
-    movie_companies.company_id = companies.id
-    '''.format(keyword)
-
-
-    movies_results = run_query(query, movies)
-    movies_updated_genre = run_query(genre_query, movies_results)
-    movies_updated_languages = run_query(language_query,movies_updated_genre )
-    movies_updated_countries = run_query(countries_query, movies_updated_languages)
-    movies_updated_companies = run_query(companies_query, movies_updated_countries)
-
-   
-    return json.dumps(movies_updated_companies)
-
-
 def search_all_(keyword):
     movies =[]
 
@@ -179,26 +101,7 @@ def search_all_(keyword):
    
     return movies_updated_companies
 
-def run_query(query, results_list):
-    
-    connection = connect_database()
-    try:
-        cursor = connection.cursor()
-        cursor.execute(query)
-        for row in cursor:
-            movie_dict = {
-                'id': row[0],
-                'title': row[1],
-                'release_year': row[2],
-                'rating': float(row[3]),
-                'poster_path': str(row[4])
-            }
-            results_list.append(movie_dict)
-            
-    except Exception as e:
-        print(e)
-        exit()
-    return results_list
+
 
 
 @api.route('/movies') 
@@ -218,6 +121,7 @@ def get_movies():
     search_all = flask.request.args.get('all')
 
     if search_all:
+        #In case the user added the 'all' parameter to the api call, execute the corresponding funciton and return the result
         movies_all_results = search_all_(search_all)
         return json.dumps(movies_all_results)
 
@@ -452,3 +356,23 @@ def display_help():
     return flask.render_template('help.html')
 
 
+def run_query(query, results_list):
+    
+    connection = connect_database()
+    try:
+        cursor = connection.cursor()
+        cursor.execute(query)
+        for row in cursor:
+            movie_dict = {
+                'id': row[0],
+                'title': row[1],
+                'release_year': row[2],
+                'rating': float(row[3]),
+                'poster_path': str(row[4])
+            }
+            results_list.append(movie_dict)
+            
+    except Exception as e:
+        print(e)
+        exit()
+    return results_list

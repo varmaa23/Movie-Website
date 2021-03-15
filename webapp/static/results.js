@@ -1,94 +1,122 @@
 window.onload = initialize;
+
+// Keeps track of 
 results_to_display = 0
 function initialize() {
 
     var refine_results_button = document.getElementById('submit');
     refine_results_button.addEventListener('click', delete_html);
-
     refine_results_button.addEventListener('click', get_movies_with_refine_filters);
-
     
-    // split URL and get search values sent from homepage
+    
+    // In case there are query parameters in the URL
     if (window.location.search.split('?')){
-        // search category could either be the query parameters (if they're coming straight from advanced search)
-        // or from the home page (a single parameter)
-        let search_category = get_search_categories()
-        let query_parameters = ''
-        let search_category_value_first_caps = ''
-        if (search_category.includes('&')) {
-            query_parameters = search_category
-        } else {
-            search_category_value_first_caps = get_search_category_value()
-            query_parameters = get_query_parameters()
-        }
-        
 
-        change_html_for_results_header(search_category, search_category_value_first_caps)
-        if (search_category == 'all') {
-            fetch_movies(search_category_value_first_caps, 'all')
-        } else {
-            fetch_movies(query_parameters, 'movies')
-        }
-            
+        // IDs of the refine results inputs and dropdowns (each one also matches the name of a parameter in the API /movies endpoint)
         const category_labels = get_category_labels()
 
-        for (label in category_labels) {    
+        // List with query parameters separated by "&"
+         separate_parameters=  get_separate_categories()
+         
+         
+         for (parameters in separate_parameters){
+            
+            parameter_category = get_search_categories(separate_parameters[parameters])
+            parameter_value = get_search_category_value(separate_parameters[parameters])
+            
+            change_html_for_results_header(parameter_category, parameter_value)
+           
+         
+            for (label in category_labels){
+            // In case the label corresponds to a dropdown, fetch the dropdown items from the API
             if (["genres", "languages", "countries"].includes(category_labels[label])) {
-                fetch_dropdown_items(category_labels[label], search_category, search_category_value_first_caps.replace(" ", ""))
-            } else {
-                set_category_value_by_url(search_category, search_category_value_first_caps)
+                fetch_dropdown_items(category_labels[label], parameter_category, parameter_value)
+               
+            } 
+
+            // If it not a dropdown fill the value of the input according to the URL parameters 
+            else if(parameter_category == 'title' || parameter_category == 'years') {
+
+            set_category_value_by_url(parameter_category, parameter_value)
+
+
             }
-        }  
+        
+    }
+         }
+        
+        // Fetch movies using the URL parameters
+        fetch_movies(get_query_parameters())
+            
+        
     }
 }
 
-// Get the 'key' parts of the URL (category=value, get the category)
-function get_search_categories() {
-    let url = window.location.search.split('?');
-    if(!url[1].includes('&')) {
-        url = window.location.search.split('?');
-        if (url[1].split('=')){
-            let values_url = url[1].split('=')
-                search_category = values_url[0]
+
+
+// Given a parameter from the URL (for example genre=Family) extract the category. In case of the example, genre
+function get_search_categories(input) {
+    
+        let values_url = input.split('=')
+        search_category = values_url[0]
+            
             return search_category
+ 
+}
 
-        }
-    } else {
-        return url[1]
+// Given a parameter from the URL (for example genre=Family) extract the value. In case of the example, Family
+function get_search_category_value(input){
+    
+    if (input.split('=')){
+        let values_url = input.split('=')
+        let search_category_value = values_url[1];
+        // If there's an apostrophe in the title, double it so SQL knows that the apostrophe is part of the string
+        let search_category_value_first_caps = ''
+        // search_category_value_list = search_category_value.replace(/%20/g, " ").split(" ")
+        search_category_value_list = decodeURIComponent(search_category_value).split(" ")
+        search_category_value_list.forEach((value) => {
+            value = value.charAt(0).toUpperCase() + value.slice(1).replace("'", "''")
+            search_category_value_first_caps += value + " "
+        })
+        search_category_value_first_caps = search_category_value_first_caps.slice(0, -1)
+
+       
+        return search_category_value_first_caps
     }
 }
 
-// Get the 'value' parts of the URL (category=value, get the value)
-function get_search_category_value(){
-   
-        let url = window.location.search.split('?');
-        if (url[1].split('=')){
-            let values_url = url[1].split('=')
-            let search_category_value = values_url[1];
-            // If there's an apostrophe in the title, double it so SQL knows that the apostrophe is part of the string
-            let search_category_value_first_caps = ''
-            // search_category_value_list = search_category_value.replace(/%20/g, " ").split(" ")
-            search_category_value_list = decodeURIComponent(search_category_value).split(" ")
-            search_category_value_list.forEach((value) => {
-                value = value.charAt(0).toUpperCase() + value.slice(1).replace("'", "''")
-                search_category_value_first_caps += value + " "
-            })
-            return search_category_value_first_caps
-        }
+
+
+// Split URL parameters 
+function get_separate_categories(){
+    let url = window.location.search.split('?');
+    separate_parameters = url[1].split('&')
+    
+    return separate_parameters
 }
+
+
 
 // Get query parameters from the URL
 function get_query_parameters(){
-    
-    search_category = get_search_categories()
-    search_category_value_first_caps = get_search_category_value()
-    let query_parameters = `${search_category}=${search_category_value_first_caps}`
+    separate_parameters=  get_separate_categories()
+    query_parameters = ''
+
+    for (parameters in separate_parameters){
+       
+       parameter_category = get_search_categories(separate_parameters[parameters])
+       parameter_value = get_search_category_value(separate_parameters[parameters])
+       query_parameters = query_parameters + parameter_category + '=' + parameter_value + '&'}
+
     return query_parameters
+       
 
 }
 
-// In refine results, set the value = to what has been searched 
+
+// In refine results, set the value = to what has been searched  (URL parameters)
 function set_category_value_by_url(search_category, search_category_value_first_caps) {
+   
     var initialized_category = document.getElementById(`${search_category}`)
     let value_string = ''
     search_category_value_list = decodeURIComponent(search_category_value_first_caps).split(" ")
@@ -96,11 +124,11 @@ function set_category_value_by_url(search_category, search_category_value_first_
         value = value.charAt(0).toUpperCase() + value.slice(1).replace("''", "'")
         value_string += value + " "
     })
-    
+   
     initialized_category.value = value_string.trim()
     
 }
- 
+
 function get_category_labels() {
     return ['genres', 'languages', 'countries', 'title', 'years', 'rating']
 }
@@ -125,8 +153,10 @@ function fetch_dropdown_items(key, search_category, search_category_value) {
     })
 
     .then(function() {
+        console.log(dropdown_list, search_category_value)
         if (dropdown_list.includes(search_category_value)) {
             set_category_value_by_url(search_category, search_category_value)
+            
         }
     })
 
@@ -152,6 +182,9 @@ function create_dropdown_options(dropdown_label, fetched_dropdown_label_options)
     }
 }
 
+
+
+
 function create_load_more_button(endpoint){
     let main_content_div = document.getElementById('main-div');
     let button_div = document.createElement('div');
@@ -162,20 +195,13 @@ function create_load_more_button(endpoint){
     button_div.classList.add('center')
     button_div.appendChild(load_button)
     main_content_div.appendChild(button_div)
-    // In case the user just arrived from the homepage and excecuted a search for the /movies/all endpoint
-    if (endpoint == 'all'){
-        load_button.addEventListener("click", function(){
-            fetch_movies(get_search_category_value(), 'all')
-        })
-    }
 
-    // In case the user is perfoming a search from "refine results"
-    else if (endpoint == 'movies'){
-        load_button.addEventListener("click", function(){
-            get_movies_with_refine_filters();
-        
-        })
-    }
+
+    load_button.addEventListener('click', function(){
+        fetch_movies(get_query_parameters())
+       
+    })
+   
     
 }
 
@@ -185,42 +211,36 @@ function increase_results_to_display(){
     return results_to_display
 }
 
-function load_results(movies, endpoint) {
+function load_results(movies) {
 
     if (results_to_display != 0){
         // In case the user has already perfomed a search and there is an existing button to load more results, remove that element
         remove_load_more_button()
     }
 
-    
     updated_results_to_display = increase_results_to_display()
     
     if (movies.length <= updated_results_to_display) {
-        // In case the 
+         // In case there are no more results to be displayed 
         max_results_displayed = movies.length
         for (let i = (updated_results_to_display - 10); i < max_results_displayed; i++){
             create_html(movies[i].title, movies[i].rating, movies[i].release_year, movies[i].id, movies[i].poster_path)
         }
     } 
+     // In case there are results that have not been displayed 
     else{
     for (let i = (updated_results_to_display - 10); i < updated_results_to_display; i++){
         create_html(movies[i].title, movies[i].rating, movies[i].release_year, movies[i].id, movies[i].poster_path)
     }
     
-    create_load_more_button(endpoint)
+    create_load_more_button()
 }
 }
 
 // Fetches movies and loads results. In case there are no results, displays informative message
-function fetch_movies(endpoint_parameters, endpoint) {
+function fetch_movies(endpoint_parameters) {
 
-    if (endpoint == 'all'){
-        var url = get_api_base_url() + `/movies/all/${endpoint_parameters}`;
-    }
-
-    else if (endpoint == 'movies'){
-        var url = get_api_base_url() + `/movies?${endpoint_parameters}`;
-    }
+    var url = get_api_base_url() + `/movies?${endpoint_parameters}`;
 
 
     fetch(url, {method: 'get'})
@@ -229,7 +249,7 @@ function fetch_movies(endpoint_parameters, endpoint) {
 
     .then(function(movies) {
         if (movies[0]){
-            load_results(movies, endpoint)  
+            load_results(movies)  
         }
         else{
             create_html_no_results()
@@ -260,29 +280,16 @@ function get_movies_with_refine_filters(){
     }
     endpoint_parameters = endpoint_parameters.substring(0, endpoint_parameters.length - 1);
     
+    // Set the URL according to the search performed by the user
+    protocol = window.location.protocol
+    hostname = window.location.hostname
+    port = window.location.port
+    url = `${protocol}//${hostname}:${port}/results?${endpoint_parameters}`
+    window.location.href = url
+  
     fetch_movies(endpoint_parameters, 'movies')
     change_html_for_results_header("", "")
    
-}
-
-function get_movies_with_refine_filters_test(){
-    
-    filters_list = get_filters()
-    category_labels = get_category_labels()
-    endpoint_parameters = ``
-    for (let i = 0; i < filters_list.length; i++){
-        filter = capitalize_first_letter(filters_list[i])
-        label = category_labels[i]
-        if (filter != 'All' && filter != ''){
-            search_string = `${label}=${filter}&`
-            endpoint_parameters += search_string 
-        }
-        
-    }
-    endpoint_parameters = endpoint_parameters.substring(0, endpoint_parameters.length - 1);
-
-    return endpoint_parameters
-    
 }
 
 
@@ -412,4 +419,6 @@ function create_html_no_results() {
     main_content_div.appendChild(message);
 
 }
+
+
 
