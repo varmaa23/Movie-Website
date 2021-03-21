@@ -34,7 +34,7 @@ e.g.\
 * When you click 'view more', you can see the individual fields for a movie.
 
 ## Images
-![Home](search.png?raw=true "HomePage Search")\
+![Home](home.png?raw=true "HomePage Search")\
 ![Results](results.png?raw=true "Results Page")\
 ![Movie](movie.png?raw=true "Individual Movie")\
 ![Advances Search](advances.png?raw=true "Advanced Search")
