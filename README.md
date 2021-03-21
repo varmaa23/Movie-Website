@@ -11,7 +11,7 @@ This dataset contains information about a list of around 45,000 movies, includin
 
 ## How to use
 1. cd into /webapp
-2. run `psql` in the terminal\
+2. run `psql` in the terminal
 3. create movies database in psql using\
 `CREATE DATABASE movies;`
 3. quit out of psql\
@@ -22,7 +22,7 @@ This dataset contains information about a list of around 45,000 movies, includin
 e.g.\
 `user = 'test_user'`\
 `password = '1234'`\
-`database = 'movies'`\
+`database = 'movies'`
 6. Run the program using the following command:\
 `python3 app.py localhost 5010`
 
@@ -34,9 +34,9 @@ e.g.\
 * When you click 'view more', you can see the individual fields for a movie.
 
 ## Images
-![Home](readme-images/search.png?raw=true "HomePage Search")\
-![Results](readme-images/results.png?raw=true "Results Page")\
-![Movie](readme-images/movie.png?raw=true "Individual Movie")\
-![Advances Search](readme-images/advances.png?raw=true "Advanced Search")\
+![Home](search.png?raw=true "HomePage Search")\
+![Results](results.png?raw=true "Results Page")\
+![Movie](movie.png?raw=true "Individual Movie")\
+![Advances Search](advances.png?raw=true "Advanced Search")
 
 
