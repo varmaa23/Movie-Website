@@ -13,7 +13,7 @@ def create_movie_table_query(items_dictionary):
             if item not in numbers:
                 query_dictionary[item] = "LIKE '%{}%'".format(items_dictionary[item])
             else:
-                if item in ['rating', 'revenue', 'budget', 'release_year']:
+                if item in ['rating', 'revenue', 'budget']:
                     query_dictionary[item] = ">= '{}' AND movies.{} > 0".format(items_dictionary[item], item)
                 elif item == 'runtime':
                     query_dictionary[item] = "<= '{}' AND movies.runtime > 0 ".format(items_dictionary[item])

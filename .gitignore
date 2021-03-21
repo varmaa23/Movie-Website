@@ -79,7 +79,10 @@ target/
 
 # IPython
 profile_default/
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
 # pyenv
 .python-version
