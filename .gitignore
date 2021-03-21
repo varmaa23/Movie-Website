@@ -1,5 +1,3 @@
-.DS_Store
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -81,7 +79,7 @@ target/
 
 # IPython
 profile_default/
-ipython_config.py
+
 
 # pyenv
 .python-version
