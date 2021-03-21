@@ -1,0 +1,118 @@
+<!-- Authors: Aishwarya Varma and Valentina Guerrero -->
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Movies</title>
+            <link rel="stylesheet" type="text/css" href="../static/webapp.css">
+            <script type="text/javascript" src="../static/results.js"></script>
+        </head>
+        <body>
+            <div class="primarycolor space_between nav">
+                <a class = "logo-link" href="home.html">
+                    <div class="extra_margin_left">
+                        <img class="logo" src="{{url_for('static', filename='logo.png')}}" />
+                        <img class="page-title"src="{{url_for('static', filename='movie_time.png')}}" />
+                    </div>
+                </a>
+                <a class="extra_margin_right advanced_search" href="advanced_search.html">
+                    Advanced Search
+                </a>
+
+            </div>
+
+            <div class="results-main-div">
+                <div class="secondary-color refine-results">
+
+
+                    <h2 class="title-margin-left">Refine Results</h2>
+                    <div class="justify-center">
+                    <form class="w-80">
+
+                        <div class="column-justify">
+                            <label>
+                                Title
+                            </label>
+                                  <input class="input" id="title" autocomplete="off"></input</div>
+                            
+                        </div>
+                        <div class="column-justify">
+                        <label>
+                            Genre
+                        </label>
+                            <select name="Genre" id="genres" class="input">
+                            
+                              </select>
+                        
+                    </div>
+
+                    <div class="column-justify">
+                        <label>
+                            Language
+                        </label>
+                            <select name="Languages" id="languages" class="input">
+                                
+                              </select>
+                        
+                    </div>
+
+                    <div class="column-justify">
+                        <label>
+                            Rating
+                        </label>
+                        <select name="Rating" id="rating" class="input">
+                            <option>All</option>
+                            <option>1.0 <span>+</span></option>
+                            <option>2.0 <span>+</span></option>
+                            <option>3.0 <span>+</span></option>
+                            <option>4.0 <span>+</span></option>
+                            <option>5.0 <span>+</span></option>
+                            <option>6.0 <span>+</span></option>
+                            <option>7.0 <span>+</span></option>
+                            <option>8.0 <span>+</span></option>
+                            <option>9.0 <span>+</span></option>
+                        </select>
+                        
+                    </div>
+
+                    <div class="column-justify">
+                        <label>
+                            Country
+                        </label>
+                            <select name="Countries" id="countries" class="input">
+                                
+                              </select>
+                        
+                    </div>
+                    <div class="column-justify">
+                        <label>
+                            Release year
+                        </label>
+                        <input class="input" id="years" autocomplete="off"></input</div>
+                        
+                    </div>
+                    </form>
+                    
+                </div>
+                <div class="center">
+                    <button id="submit">Search</button>
+                </div>
+                
+                </div>
+
+
+                <div class="results" id="results">
+
+                    <h2  id='results_title' style="text-align: center;">Results</h2>
+
+                    <div id="main-div">
+
+                    </div>
+            
+                    
+             
+                </div>
+                
+            </div>
+
+        </body>
+    </html>

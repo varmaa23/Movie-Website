@@ -1,0 +1,26 @@
+Names: Aishwarya Varma and Valentina Guerrero
+
+Description of the database: 
+Link: https://www.kaggle.com/rounakbanik/the-movies-dataset/
+In order to view the dataset, click the link and download movies_metadata.csv.
+This dataset contains information about a list of around 45,000 movies, including information about their genre, production companies, revenue, languages, spoken languages, release dates, ratings, movie posters, and a synopsis. 
+
+User Story 1:
+A teenager would like to learn more about their favorite childhood movie.
+
+Implementation:
+We could create a general search tool that allows users to search through the database of movies to get the exact movie match and display its relevant information (maybe we could add an option so when the user clicks on “view more” they go to a different page with more information).To interact with this search tool, the user would have to initially type a keyword that matches one of the fields of this dataset (title, production company, genre, etc). The screen would then refresh so they can see all the movies that match this search. 
+
+User Story 2:
+A mother wants to find a nice family movie in English to watch in their free time.
+
+Implementation: 
+The user could find the movie she is looking for through the previously described search tool. The process could work as follows: she would start by typing one of the fields she wants to filter by (for example, “family”, a keyword that corresponds to a genre in this case). Once she does this, the screen would show her the results that match that keyword plus a more advanced search tool. If she wants to specify her search even more -for instance, to display only English movies- she could select this option from a dropdown menu that corresponds to the language of the movies and is part of the advanced search tool. Likewise, she could also specify the ratings of the movie she is looking for by selecting some specific values within a range (for example, she could look for movies that have between 3.5 to 6.8 user-ratings). She can do this either in the refine search option, or the advanced search tool. 
+
+
+User Story 3:
+A production company wants to assess the revenue brought in by its rival’s movies.
+
+Implementation: 
+This user could use the advanced search tool to search up the production company and filter by year (if they want a specific range). In order to facilitate their search, we could add an option in the advanced search tool so it is possible to sort by different values (popularity, alphabetical order of the titles, release date, and revenue). 
+

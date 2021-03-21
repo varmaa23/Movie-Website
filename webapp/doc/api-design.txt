@@ -1,0 +1,79 @@
+Authors: Aishwarya Varma and Valentina Guerrero
+
+This endpoint is for the list of filtered movies. 
+REQUEST: /movies
+The results are constrained depending on the following optional GET parameters, which will be combined by a boolean AND: 
+    
+    search_everything = search_text // when searched, match the unser-given keyword to any field in the database
+    title=title_list 
+    language=language_abbrev
+    rating=rating_range
+    prod_companies=companies_list
+    prod_countries=countries_list
+    years=year_range
+    spoken_languages=lang_list
+    revenue=revenue_range
+    genre=genre_list
+RESPONSE: A JSON list of dictionaries, each of which represents one movie, sorted by descending order of release date. Each book dictionary will have the
+following fields:
+
+   movie_id -- (integer)
+   title --  (string) // the title of the movie
+   poster_path -- (string) // the image pathname of the movie's poster
+   year --  (integer) // the release year, represented as a 4-digit integer
+   genre -- (list) // the genre(s) of the movie
+   rating -- (float) // the movie's rating on a scale from 1-10
+EXAMPLE(S):
+   api/movies?genre=Family
+
+   [{"id": 26555, "title": "Avatar 2", "release_year": 2020, "rating": 0.0}, {"id": 30394, "title": "Bad Boys for Life", "release_year": 2018, "rating": 0.0}, {"id": 38873, "title": "The Other Side of the Wind", "release_year": 2018, "rating": 0.0}, {"id": 33351, "title": "Iron Sky: The Coming Race", "release_year": 2018, "rating": 0.0}...]
+
+
+This endpoint is for an specific movie. 
+REQUEST: /movie/<movie_id>
+REPONSE: A JSON dictionary that represents a specific movie with the following fields:
+
+   title --  (string) // the title of the movie
+   poster_path -- (string) // the image pathname of the movie's poster
+   year --  (integer) // the release year, represented as a 4-digit integer
+   genre -- (list) // the genre(s) of the movie
+   rating -- (float) // the movie's rating on a scale from 1-10
+   overview -- (string) // a short description of the plot of the movie
+   runtime -- (integer) // duration of the movie in minutes
+   budget --  (float) // budget of the movie
+   revenue -- (float) // total box office profit the movie made
+   IMBD_id -- (integer) // the title ID that can be used to search the title on IMDb 
+   language -- (string) // the main language spoken 
+   spoken_languages -- (list) // the spoken language(s) in the movie
+   prod_companies -- (list) // the companies that were involved in the movie's production
+   prod_countries -- (list) // the countries in which the movie was produced
+EXAMPLE(S):
+   api/movie/123
+
+   {"id": 123, "title": "Flirting with Disaster", "overview": "Adopted as a child, new father Mel Colpin (Ben Stiller) decides he cannot name his son until he knows his birth parents, and determines to make a cross-country quest to find them. Accompanied by his wife, Nancy (Patricia Arquette), and an inept yet gorgeous adoption agent, Tina (Tea Leoni), he departs on an epic road trip that quickly devolves into a farce of mistaken identities, wrong turns, and overzealous and love-struck ATF agents (Josh Brolin, Richard Jenkins).", "budget": 7000000.0, "revenue": 14702438.0, "imbd_id": "tt0116324", "rating": 6.3, "runtime": 92.0, "release_year": 1996, "poster_path": "/pxxYa68L05ZR4vMwc6yB8KqXslo.jpg"}
+
+
+REQUEST: /genres
+RESPONSE: a JSON list of strings sorted in alphabetical order.
+EXAMPLE(S):
+   api/genres
+
+   ["Animation", "Comedy", "Family", "Adventure", ...]
+
+REQUEST: /languages
+RESPONSE: A JSON list of strings sorted in alphabetical order (put the 5 most spoken languages at the top and the rest ordered).
+   api/languages
+EXAMPLE(S):
+
+   ["English", "Fran\u00e7ais", "Espa\u00f1ol", "Deutsch" ...]
+
+   I know it looks strange here, but trust me, it renders correctly with javascript. 
+
+REQUEST: /countries
+RESPONSE: A JSON list of countries sorted in alphabetical order.
+EXAMPLE(S)
+   api/countries
+
+   ["United States of America", "Germany", "United Kingdom" ...]
+
+

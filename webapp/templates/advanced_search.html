@@ -1,0 +1,130 @@
+<!-- Authors: Aishwarya Varma and Valentina Guerrero -->
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Movies</title>
+            <link rel="stylesheet" type="text/css" href="../static/webapp.css">
+            <script type="text/javascript" src="../static/advanced_search.js"></script>
+        </head>
+        <body>
+            <div class="primarycolor space_between nav">
+                <a class = "logo-link" href="home.html">
+                <div class="extra_margin_left">
+                    <img class="logo" src="{{url_for('static', filename='logo.png')}}" />
+                    <img class="page-title"src="{{url_for('static', filename='movie_time.png')}}" />
+                </div>
+            </a>
+            <a class="extra_margin_right advanced_search" href="advanced_search.html">
+                    Advanced Search
+                </a>
+
+            </div>
+            <div class="advanced-header">
+                <h1>Advanced Search</h1>
+            </div>
+
+                    <div class="justify-center">
+                    <form class="w-45">
+
+                        <div class="column-justify">
+                            <label>
+                                Title
+                            </label>
+                                  <input class="input" id="title" autocomplete="off"></input</div>
+                            
+                        </div>
+
+                        <div class="column-justify">
+                            <label>
+                                Genre
+                            </label> 
+                            <select name="input" id="genres" class="input">
+                            
+                              </select>
+                        </div>
+
+                        <div class="column-justify">
+                            <label>
+                                Production Company
+                            </label>
+                                  <input class="input" id="company" autocomplete="off"></input</div>
+                            
+                        </div>
+
+                    <div class="column-justify">
+                        <label>
+                            Language
+                        </label>
+                            <select name="Languages" id="languages" class="input">
+                                
+                              </select>
+                        
+                    </div>
+
+                    <div class="column-justify">
+                        <label>
+                            Rating
+                        </label>
+                        <select name="Rating" id="rating" class="input">
+                            <option>All</option>
+                            <option>1.0 <span>+</span></option>
+                            <option>2.0 <span>+</span></option>
+                            <option>3.0 <span>+</span></option>
+                            <option>4.0 <span>+</span></option>
+                            <option>5.0 <span>+</span></option>
+                            <option>6.0 <span>+</span></option>
+                            <option>7.0 <span>+</span></option>
+                            <option>8.0 <span>+</span></option>
+                            <option>9.0 <span>+</span></option>
+                        </select>
+                        
+                    </div>
+
+                    <div class="column-justify">
+                        <label>
+                            Production Country
+                        </label>
+                            <select name="Countries" id="countries" class="input">
+                                
+                              </select>
+                        
+                    </div>
+                    <div class="column-justify">
+                        <label>
+                            Release year
+                        </label>
+                        <input class="input" id="years" autocomplete="off" placeholder="Movies released after ..."></input</div>
+                        
+                    </div>
+
+                    <div class="column-justify">
+                        <label>
+                            Revenue
+                        </label>
+                        <input class="input" id="revenue" autocomplete="off" placeholder="Movies with revenue greater than ..."></input</div>
+                        
+                    </div>
+
+                    <div class="column-justify">
+                        <label>
+                            Budget
+                        </label>
+                        <input class="input" id="budget" autocomplete="off" placeholder="Movies with budget greater than ..."></input</div>
+                        
+                    </div>
+
+                    <div class="column-justify">
+                        <label>
+                            Runtime
+                        </label>
+                        <input class="input" id="runtime" autocomplete="off" placeholder="Movies with runtime less than ..."></input</div>
+                        
+                    </div>
+
+                <div class="center more-results">
+                    <button id="submit">Search</button>
+                </div>
+            
+            </form>
+        </body>
+    </html>

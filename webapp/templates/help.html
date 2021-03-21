@@ -1,0 +1,100 @@
+<!-- Authors: Aishwarya Varma and Valentina Guerrero -->
+<!DOCTYPE html>
+    <html>
+        <head>
+            <h1>Need API help? You've come to the right place. </h1>
+        </head>
+
+        <body>
+            <h2>REQUEST: /movies</h2>
+            <p>This endpoint is for the list of filtered movies. </p>
+
+                <p>GET parameters:<p>
+                <p>The results are constrained depending on the following optional GET parameters, which will be combined by a boolean AND:</p>
+            <ol>
+                <li>all (Optional, default: ' ') </li>
+                <li>title (Optional, default: ' ') </li>
+                <li>budget (Optional, default: ' ') </li>
+                <li>languages (Optional, default: ' ') </li>
+                <li>rating (Optional, default: ' ')</li>
+                <li>company (Optional, default: ' ')</li>
+                <li>countries (Optional, default: ' ')</li>
+                <li>years (Optional, default: ' ')</li>
+                <li>revenue (Optional, default: ' ')</li>
+                <li>genres (Optional, default: ' ')</li>
+                <li>runtime (Optional, default: ' ')</li>
+
+            </ol>
+            <p>RESPONSE: A JSON list of dictionaries, each of which represents one movie, sorted by descending order of release date. Each book dictionary will have the
+                following fields:</p>
+           <ol>
+               <li>movie_id -- (integer)</li>
+               <li>title --  (string) // the title of the movie</li>
+               <li>poster_path -- (string) // the image pathname of the movie's poster</li>
+               <li>year --  (integer) // the release year, represented as a 4-digit integer</li>
+               <li>genre -- (list) // the genre(s) of the movie</li>
+               <li>rating -- (float) // the movie's rating on a scale from 1-10</li>
+
+            </ol>
+            <p> EXAMPLE(S): </p>
+            <p>api/movies?genre=Family</p>
+            <p>[{"id": 26555, "title": "Avatar 2", "release_year": 2020, "rating": 0.0}, 
+                {"id": 30394, "title": "Bad Boys for Life", "release_year": 2018, "rating": 0.0}, {"id": 38873, 
+                "title": "The Other Side of the Wind", "release_year": 2018, "rating": 0.0}, {"id": 33351, 
+                "title": "Iron Sky: The Coming Race", "release_year": 2018, "rating": 0.0}...]</p>
+           
+
+            <p>api/movies?genre=Family&title=Toy</p>
+            <p>[{"id": 25796, "title": "Toy Story That Time Forgot", "release_year": 2014, "rating": 6.8, "poster_path": "/aGDVBwpxlA95mn7yTxwM8r0oTR0.jpg"}, {"id": 35823, "title": "Plastic Galaxy: The Story of Star Wars Toys", "release_year": 2014, "rating": 6.4, "poster_path": "/p4XtRTZOHoDnCheNX1e1mruperF.jpg"}, {"id": 21924, "title": "Toy Story of Terror!", "release_year": 2013, "rating": 7.3, "poster_path": "/cT8krQxRoioNk2KabSYuIf2yuaC.jpg"}, {"id": 15347, "title": "Toy Story 3", "release_year": 2010, "rating": 7.6, "poster_path": "/mMltbSxwEdNE4Cv8QYLpzkHWTDo.jpg"}, {"id": 43944, "title": "Toyland", "release_year": 2007, "rating": 6.4, "poster_path": "/96sRO2PA8VJhODs9lNCX8gjeirG.jpg"}, {"id": 15247, "title": "Puppet Master vs Demonic Toys", "release_year": 2004, "rating": 2.7, "poster_path": "/fIYxKr05lrUAllkhEgY32448a3d.jpg"}, {"id": 36720, "title": "Toy Reanimator", "release_year": 2002, "rating": 0.0, "poster_path": ""}, {"id": 2996, "title": "Toy Story 2", "release_year": 1999, "rating": 7.3, "poster_path": "/3CmK3XurcLeUyMifCR28ibzupbB.jpg"}, {"id": 24743, "title": "How the Toys Saved Christmas", "release_year": 1996, "rating": 6.8, "poster_path": "/wBHngr7ezJw8dG6bBq90s2FjVk7.jpg"}, {"id": 0, "title": "Toy Story", "release_year": 1995, "rating": 7.7, "poster_path": "/rhIRbceoE9lR4veEXuwCC2wARtG.jpg"}, {"id": 22408, "title": "Dollman vs. Demonic Toys", "release_year": 1993, "rating": 4.2, "poster_path": "/qzXWJVsWzjZU2M6tAj6lCavWnnC.jpg"}, {"id": 2142, "title": "Toys", "release_year": 1992, "rating": 5.0, "poster_path": "/ea5W7Py440QZS38B6TaX1ja1TlN.jpg"}, {"id": 16319, "title": "Demonic Toys", "release_year": 1992, "rating": 4.7, "poster_path": "/g4L0SDFT0AeJGNKlq1CTOC8NBk8.jpg"}, {"id": 5704, "title": "Toy Soldiers", "release_year": 1991, "rating": 6.2, "poster_path": "/cBZM6h6Ng7vxBAzXyaOWUFbzdQ0.jpg"}, {"id": 25694, "title": "Silent Night, Deadly Night 5: The Toy Maker", "release_year": 1991, "rating": 5.1, "poster_path": "/6UfPS7KbcBury0T2MXWivonzD9F.jpg"}, {"id": 19110, "title": "Tin Toy", "release_year": 1988, "rating": 6.3, "poster_path": "/jjowaEDrgorhKKg6XcctRRpcKJ.jpg"}, {"id": 4798, "title": "The Toy", "release_year": 1982, "rating": 5.7, "poster_path": "/qLQeHeB5kszXxKNqtrOvmfNVD69.jpg"}, {"id": 16454, "title": "Toys in the Attic", "release_year": 1963, "rating": 7.5, "poster_path": "/tZHAOsHoE8GymqT7FF1yA29NYiS.jpg"}, {"id": 1908, "title": "Babes in Toyland", "release_year": 1961, "rating": 5.8, "poster_path": "/nYtN5gyJlNEqQe5wsTe1vWodPZR.jpg"}, {"id": 8520, "title": "Giants and Toys", "release_year": 1958, "rating": 5.8, "poster_path": "/ncwakYEeDptGzVlqFZo6FvpmVd2.jpg"}, {"id": 2968, "title": "Babes in Toyland", "release_year": 1934, "rating": 6.6, "poster_path": "/8EoKfCGMTcywFSA6Wxt1a8HDQlx.jpg"}, {"id": 44902, "title": "Soviet Toys", "release_year": 1924, "rating": 5.2, "poster_path": "/yz0JFefVfPVN5WFDHbPpP5hlD8x.jpg"}]</p>
+
+
+        <h2>REQUEST: /movie/{movie_id}</h2>
+        <p>This endpoint is for an specific movie.</p>
+        <p>GET parameters<p>
+             <ol>
+               <li>movie_id (Mandatory)</li>
+            </ol>
+
+        <p>REPONSE: A JSON dictionary that represents a specific movie with the following fields:</p>
+        <ol>
+            <li>title --  (string) // the title of the movie</li>
+            <li>poster_path -- (string) // the image pathname of the movie's poster</li>
+            <li>year --  (integer) // the release year, represented as a 4-digit integer</li>
+            <li>genre -- (list) // the genre(s) of the movie</li>
+            <li>rating -- (float) // the movie's rating on a scale from 1-10</li>
+            <li>overview -- (string) // a short description of the plot of the movie</li>
+            <li>runtime -- (integer) // duration of the movie in minutes</li>
+            <li>budget --  (float) // budget of the movie</li>
+            <li>revenue -- (float) // total box office profit the movie made</li>
+            <li>IMBD_id -- (integer) // the title ID that can be used to search the title on IMDb </li>
+            <li>language -- (string) // the main language spoken </li>
+            <li>spoken_languages -- (list) // the spoken language(s) in the movie</li>
+            <li>prod_companies -- (list) // the companies that were involved in the movie's production</li>
+            <li>prod_countries -- (list) // the countries in which the movie was produced</li>
+        </ol>
+        <p>EXAMPLE(S):</p> 
+        <p>api/movie/123</p>
+        <p>{"id": 123, "title": "Flirting with Disaster", "overview": "Adopted as a child, new father Mel Colpin (Ben Stiller) decides he cannot name his son until he knows his birth parents, and determines to make a cross-country quest to find them. Accompanied by his wife, Nancy (Patricia Arquette), and an inept yet gorgeous adoption agent, Tina (Tea Leoni), he departs on an epic road trip that quickly devolves into a farce of mistaken identities, wrong turns, and overzealous and love-struck ATF agents (Josh Brolin, Richard Jenkins).", "budget": 7000000.0, "revenue": 14702438.0, "imbd_id": "tt0116324", "rating": 6.3, "runtime": 92.0, "release_year": 1996, "poster_path": "/pxxYa68L05ZR4vMwc6yB8KqXslo.jpg"}</p>
+        
+        <h2>REQUEST: /genres</h2>
+        <p>RESPONSE: a JSON list of strings sorted in alphabetical order.</p>
+        <p>EXAMPLE(S):</p>
+        <p>api/genres</p>
+        <p>["Animation", "Comedy", "Family", "Adventure", ...]</p>
+
+        <h2>REQUEST: /languages</h2>
+        <p>RESPONSE: A JSON list of strings sorted in alphabetical order (put the 5 most spoken languages at the top and the rest ordered).
+            api/languages</p>
+        <p>EXAMPLE(S):</p>
+        <p>api/languages</p>
+        <p>["English", "Fran\u00e7ais", "Espa\u00f1ol", "Deutsch" ...]</p>
+        <p>I know it looks strange here, but trust me, it renders correctly with javascript. </p>
+
+        <h2>REQUEST: /countries</h2>
+        <p>RESPONSE: A JSON list of countries sorted in alphabetical order.</p>
+        <p>EXAMPLE(S):</p>
+        <p>api/countries</p>
+        <p>["United States of America", "Germany", "United Kingdom" ...]</p>
+
+        </body>
+    </html>

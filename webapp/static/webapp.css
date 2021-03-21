@@ -1,0 +1,307 @@
+/* Authors: Valentina Guerrero and Aishwarya Varma  */
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, sans-serif;
+    
+}
+
+.title {
+    color: #045550;
+    text-align: center;
+    
+}
+
+.instructions {
+   
+    text-align: center;
+}
+
+.primarycolor{
+    background-color: #ADD9D4;
+}
+
+.secondary-color{
+    background-color: #C4C4C4;
+}
+
+
+.form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.movie-div{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+}
+
+button {
+    height: 2.5rem;
+    background-color: #045550;
+    color: white;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: white;
+    color: #045550;
+}
+
+#content-div{
+    width: 60%;
+}
+
+.space_between{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.extra_margin_left{
+    margin-left: 3rem;
+}
+
+.extra_margin_right{
+    margin-right: 10rem;
+}
+
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.justify-center{
+    display: flex;
+    justify-content: center;
+
+}
+
+.vh60{
+    
+}
+
+.extra-padding{
+    padding: 2rem;
+}
+
+.border{
+    border-radius: 6px;
+    border: none;
+}
+
+.search_title{
+    font-weight: 500;
+    font-size: 1.1rem;
+
+}
+
+.input{
+
+    background-color: white;
+    border: 0.1px solid;
+    height: 2.3rem;
+    border-radius: 4px;
+
+}
+
+.form-homepage{
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-gap: 1px;
+    width: 70%;
+    align-items: start;
+}
+
+.sub-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.home-dropdown{
+    visibility: hidden;
+    background: white;
+
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    display: none;
+
+}
+
+.show{
+    visibility: visible;
+    display: flex;
+    
+}
+
+.show:hover{
+    background-color: #C4C4C4;
+}
+
+
+.results-main-div{
+    display: grid;
+    grid-template-columns: 30% 65%;
+    grid-gap: 2%;
+
+}
+
+.movie-card{
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    height: 13rem;
+
+}
+
+
+.movie-image{
+
+    width: 100%;
+    background-image: url('null_movie.png') ;
+
+ }
+
+.view-more {
+    color: #045550; 
+}
+.view-more:hover {
+    color: #ADD9D4
+}
+
+.movie-card-margin{
+    margin-left: 3rem;
+
+}
+
+.w-80{
+    width: 80%;
+}
+
+.w-60{
+    width: 55%;
+}
+
+.w-45{
+    width: 45%;
+}
+
+.border-div{
+    border-top: 1px solid #C4C4C4;
+}
+
+.title-margin-left{
+    margin-left: 3rem;
+    margin-bottom: 0.5rem;
+}
+.align{
+display: flex;
+align-items: center;}
+
+.sub-div{
+    height: 2.5rem;
+}
+
+.movie-poster{
+  
+    width: 95%;
+}
+
+.movie-grid{
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+
+.column-justify{
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    flex-direction: column;
+    margin: 1.5rem 0;
+}
+
+.search-container-hp{
+    margin-top: 19vh;
+    align-items: flex-start;
+}
+
+.nav{
+    height: 15vh;
+}
+
+.refine-results{
+    height: 90vh;
+    overflow-y: auto;
+}
+
+.results{
+    height: 90vh;
+    overflow-y: auto;
+}
+
+.more-results{
+    margin-bottom: 2rem;
+}
+
+.advanced_search{
+    color: #045550;
+    font-size: 23px;
+    margin-left: 0;
+}
+
+.advanced_search:hover {
+    color: white;
+}
+
+.advanced-header {
+    text-align: center;
+}
+.logo-link{
+    text-decoration: none;
+}
+
+.logo {
+    height: 14vh;
+}
+.page-title{
+    height: 14vh;
+}
+.background {
+   
+    background-image: url(background.png);
+    /* background-repeat: no-repeat; */
+    /* background-attachment: fixed; */
+    /* background-size: cover; */
+    height: 1;
+    height: 310px;
+}
+
+.select {
+    background-color: #C4C4C4;
+}
+
+.error-header {
+    text-align: center;
+}
+
+
+.advanced_search_home{
+text-align: right;
+margin-top: 1.5rem;
+
+}
+
+.font-16{
+    font-size: 16px;
+}

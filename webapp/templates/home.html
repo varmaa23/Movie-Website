@@ -1,0 +1,63 @@
+<!-- Authors: Aishwarya Varma and Valentina Guerrero -->
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Movies</title>
+            <link rel="stylesheet" type="text/css" href="../static/webapp.css">
+            <script type="text/javascript" src="../static/homepage.js"></script>
+        </head>
+        <body class="background">
+            <div class="primarycolor space_between nav">
+                <a class = "logo-link" href="home.html">
+                    <div class="extra_margin_left">
+                        <img class="logo" src="{{url_for('static', filename='logo.png')}}" />
+                        <img class="page-title"src="{{url_for('static', filename='movie_time.png')}}" />
+                    </div>
+                </a>
+                <a class="extra_margin_right advanced_search" href="advanced_search.html">
+                    
+                </a>
+
+            </div>
+            <div class="">
+            <div class="center vh60 search-container-hp">
+               
+                <div class="primarycolor border">
+                    <div class="extra-padding">
+                    <h4 class="search_title">
+                        Search movies by title, genre, language and company
+                    </h4>
+
+                    <div class="center">
+                        <form class="form-homepage">
+                            <div class="sub-form">
+                                <input class="input" id="input" placeholder="Search" autocomplete="off">
+                                <div class="dropdown" id="dropdown">
+                                    <a class="home-dropdown" id="all">Search All: <span id="all_text"> </span></a>
+                                    <a class="home-dropdown" id="title">Title: <span id="title_text"> </span></a>
+                                    <a class="home-dropdown" id="genres">Genre: <span id="genre_text"> </span></a>
+                                    <a class="home-dropdown" id="languages">Language: <span id="language_text"> </span></a>
+                                    <a class="home-dropdown" id="companies">Production: <span id="company_text"> </span></a>
+                                    <a class="home-dropdown" id="years">Release Year: <span id="year_text"> </span></a>
+                                </div>
+                            </div>
+                            </input>
+                        <button class="button" id="button">
+                            Search
+                        </button>
+                    </form>
+                    </div>
+                    <div class="advanced_search_home">
+                        <a class=" advanced_search font-16 " href="advanced_search.html">
+                            advanced search
+                           </a>
+                    </div>
+                    
+                </div>
+                </div>
+            </div>
+            <div class=""></div>
+        </div>
+
+        </body>
+    </html>
